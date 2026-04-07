@@ -1,0 +1,48 @@
+---
+const timeline = [
+  { year: '2005–2023', label: 'Führungserfahrung', desc: 'Aldi Süd, Außendienst — Teamführung, Prozesse, Ergebnisverantwortung.' },
+  { year: '2024',      label: 'Pivot zu KI',       desc: 'WBS-Abschluss 1,0. DEKRA-Zertifizierung als KI-Beauftragter.' },
+  { year: '2025',      label: 'AIOS',               desc: 'Eigenes KI-Betriebssystem gebaut: n8n, Directus, MCP-Server, Automatisierungen.' },
+  { year: 'Heute',     label: 'Portfolio',           desc: 'Projekte, die echte Marktlücken schließen — dokumentiert, live, messbar.' },
+];
+---
+
+<section id="about" style="border-top: 1px solid var(--border);">
+  <div class="mx-auto max-w-5xl px-6 py-24">
+
+    <div class="flex items-center gap-4 mb-16">
+      <div style="background: var(--text);" class="w-8 h-px shrink-0"></div>
+      <p style="color: var(--muted); letter-spacing: 0.12em;" class="text-xs uppercase">Über mich</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-16 items-start">
+
+      <div>
+        <h2
+          style="color: var(--text);"
+          class="text-4xl font-semibold tracking-tight mb-8"
+        >
+          Vom Prozess-<br />
+          <span style="color: var(--subtle);">kenner zum KI-Bauer.</span>
+        </h2>
+        <p style="color: var(--muted);" class="text-base leading-relaxed mb-6">
+          Ich kenne Unternehmen von innen — nicht aus dem Consulting-Handbuch, sondern aus Jahren operativer Führungsverantwortung.
+        </p>
+        <p style="color: var(--muted);" class="text-base leading-relaxed">
+          Das macht den Unterschied: Ich automatisiere Prozesse, die ich selbst gelebt habe. Keine Luftschlösser — sondern Lösungen, die in der Realität funktionieren.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-8">
+        {timeline.map(({ year, label, desc }) => (
+          <div style="border-left: 1px solid var(--border);" class="pl-6">
+            <p style="color: var(--subtle);" class="text-xs mb-1">{year}</p>
+            <p style="color: var(--text);" class="text-sm font-semibold mb-2">{label}</p>
+            <p style="color: var(--muted);" class="text-sm leading-relaxed">{desc}</p>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </div>
+</section>

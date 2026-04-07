@@ -1,0 +1,78 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('projects'))
+  .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+---
+
+<BaseLayout
+  title="Projekte — Timo Goetz"
+  description="KI-Automatisierungsprojekte von Timo Goetz — MCP-Server, Workflows, Infrastruktur."
+>
+  <div class="mx-auto max-w-5xl px-6 pt-32 pb-24">
+
+    <div class="flex items-center gap-4 mb-16">
+      <div style="background: var(--text);" class="w-8 h-px shrink-0"></div>
+      <p style="color: var(--muted); letter-spacing: 0.12em;" class="text-xs uppercase">Projekte</p>
+    </div>
+
+    <h1
+      style="color: var(--text);"
+      class="text-5xl md:text-6xl font-semibold tracking-tight mb-6"
+    >
+      Projekte
+    </h1>
+    <p style="color: var(--muted);" class="text-lg leading-relaxed max-w-xl mb-20">
+      Jedes Projekt löst ein echtes Problem — dokumentiert, messbar, live.
+    </p>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      {projects.map((project) => (
+        <a
+          href={`/projects/${project.slug}`}
+          style="border: 1px solid var(--border); background: var(--bg-2);"
+          class="block p-8 rounded-sm hover:opacity-80 transition-opacity group"
+        >
+          <div class="flex items-start justify-between mb-6">
+            <span
+              style={`color: ${project.data.status === 'live' ? 'var(--text)' : 'var(--subtle)'}; border: 1px solid var(--border);`}
+              class="text-xs px-2 py-1 rounded-sm uppercase tracking-wide"
+            >
+              {project.data.status}
+            </span>
+            <svg
+              width="14" height="14" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              style="color: var(--subtle);"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </div>
+
+          <h2 style="color: var(--text);" class="text-xl font-semibold mb-3">
+            {project.data.title}
+          </h2>
+
+          <p style="color: var(--muted);" class="text-sm leading-relaxed mb-2">
+            <span style="color: var(--subtle);">Problem:</span> {project.data.problem}
+          </p>
+          <p style="color: var(--muted);" class="text-sm leading-relaxed mb-6">
+            <span style="color: var(--subtle);">Lösung:</span> {project.data.solution}
+          </p>
+
+          <div class="flex flex-wrap gap-2">
+            {project.data.stack.map((tech: string) => (
+              <span
+                style="color: var(--subtle); border: 1px solid var(--border);"
+                class="text-xs px-2 py-1 rounded-sm"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

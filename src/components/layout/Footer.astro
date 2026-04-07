@@ -1,0 +1,26 @@
+---
+const links = [
+  { href: '/projects', label: 'Projekte' },
+  { href: '/about',    label: 'Über mich' },
+  { href: '/impressum', label: 'Impressum' },
+];
+---
+
+<footer style="border-top: 1px solid var(--border);">
+  <div class="mx-auto max-w-5xl px-6 py-8 flex items-center justify-between">
+    <p style="color: var(--subtle);" class="text-xs">
+      © {new Date().getFullYear()} Timo Goetz
+    </p>
+    <nav class="flex gap-6">
+      {links.map(({ href, label }) => (
+        <a
+          href={href}
+          style="color: var(--subtle);"
+          class="text-xs hover:opacity-60 transition-opacity"
+        >
+          {label}
+        </a>
+      ))}
+    </nav>
+  </div>
+</footer>

@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Impressum — Timo Goetz"
+  description="Impressum und rechtliche Angaben für timo-goetz-ai.de"
+>
+  <div class="mx-auto max-w-3xl px-6 pt-32 pb-24">
+
+    <div class="flex items-center gap-4 mb-12">
+      <div style="background: var(--text);" class="w-8 h-px shrink-0"></div>
+      <p style="color: var(--muted); letter-spacing: 0.12em;" class="text-xs uppercase">Impressum</p>
+    </div>
+
+    <h1 style="color: var(--text);" class="text-4xl font-semibold tracking-tight mb-12">
+      Impressum
+    </h1>
+
+    <div style="color: var(--muted);" class="text-sm leading-relaxed space-y-8">
+
+      <section>
+        <h2 style="color: var(--text);" class="text-base font-semibold mb-3">Angaben gemäß § 5 TMG</h2>
+        <p>
+          Timo Goetz<br />
+          [Straße und Hausnummer]<br />
+          [PLZ Ort]
+        </p>
+      </section>
+
+      <section>
+        <h2 style="color: var(--text);" class="text-base font-semibold mb-3">Kontakt</h2>
+        <p>
+          E-Mail: timo@timo-goetz-ai.de
+        </p>
+      </section>
+
+      <section>
+        <h2 style="color: var(--text);" class="text-base font-semibold mb-3">Haftungsausschluss</h2>
+        <p>
+          Die Inhalte dieser Seite wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte kann jedoch keine Gewähr übernommen werden.
+        </p>
+      </section>
+
+    </div>
+
+  </div>
+</BaseLayout>

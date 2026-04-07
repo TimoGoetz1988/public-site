@@ -1,0 +1,81 @@
+---
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('projects'))
+  .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+---
+
+<section id="projects" style="background: var(--bg-2); border-top: 1px solid var(--border);">
+  <div class="mx-auto max-w-5xl px-6 py-24">
+
+    <div class="flex items-center gap-4 mb-16">
+      <div style="background: var(--text);" class="w-8 h-px shrink-0"></div>
+      <p style="color: var(--muted); letter-spacing: 0.12em;" class="text-xs uppercase">Projekte</p>
+    </div>
+
+    <h2
+      style="color: var(--text);"
+      class="text-4xl md:text-5xl font-semibold tracking-tight mb-16"
+    >
+      Was der Markt braucht —<br />
+      <span style="color: var(--subtle);">und wie ich es löse.</span>
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      {projects.map((project) => (
+        <a
+          href={`/projects/${project.slug}`}
+          style="border: 1px solid var(--border); background: var(--bg);"
+          class="block p-8 rounded-sm hover:opacity-80 transition-opacity group"
+        >
+          <div class="flex items-start justify-between mb-6">
+            <span
+              style={`color: ${project.data.status === 'live' ? 'var(--text)' : 'var(--subtle)'}; border: 1px solid var(--border);`}
+              class="text-xs px-2 py-1 rounded-sm uppercase tracking-wide"
+            >
+              {project.data.status}
+            </span>
+            <svg
+              width="14" height="14" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              style="color: var(--subtle);"
+              class="group-hover:translate-x-0.5 transition-transform mt-1"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </div>
+
+          <h3 style="color: var(--text);" class="text-xl font-semibold mb-3">
+            {project.data.title}
+          </h3>
+
+          <p style="color: var(--muted);" class="text-sm leading-relaxed mb-6">
+            {project.data.solution}
+          </p>
+
+          <div class="flex flex-wrap gap-2">
+            {project.data.stack.map((tech: string) => (
+              <span
+                style="color: var(--subtle); border: 1px solid var(--border);"
+                class="text-xs px-2 py-1 rounded-sm"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <div class="mt-12">
+      <a
+        href="/projects"
+        style="color: var(--muted); border-bottom: 1px solid var(--subtle);"
+        class="text-sm pb-0.5 hover:opacity-60 transition-opacity"
+      >
+        Alle Projekte ansehen
+      </a>
+    </div>
+
+  </div>
+</section>
