@@ -1,55 +1,80 @@
-# timo-goetz-ai.de — Portfolio
+<div align="center">
 
-Personal portfolio and project showcase for Timo Goetz — KI-Beauftragter & AI Engineer.
+# timo-goetz-ai.de
 
-**Live:** [timo-goetz-ai.de](https://timo-goetz-ai.de)  
-**Account:** ai_studio@timo-goetz-ai.de  
-**Deploy:** Vercel (auto on push to `main`)
+**Portfolio & Projekt-Showcase — KI-Beauftragter & AI Engineer**
 
-## Stack
+[![Vercel](https://img.shields.io/badge/Vercel-Live-black?logo=vercel)](https://timo-goetz-ai.de)
+[![Astro](https://img.shields.io/badge/Astro-5-FF5D01?logo=astro)](https://astro.build)
+[![License](https://img.shields.io/badge/License-Private-lightgrey)](.)
 
-- [Astro](https://astro.build/) — Static site generator
-- Tailwind CSS — Utility-first styling
-- TypeScript
-- Vercel — Hosting & CI/CD
+**Live:** [timo-goetz-ai.de](https://timo-goetz-ai.de) &nbsp;|&nbsp; **Deploy:** Vercel (auto auf `main`)
 
-## Local Development
+</div>
+
+---
+
+## Was ist das?
+
+Persönliche Portfolio-Website von Timo Goetz — KI-Beauftragter (DEKRA) & Automation Architect. Die Seite zeigt Projekte, Skills und den Fokus auf KI-gestützte Automatisierung: von VoiceBots bis Predictive Dashboards.
+
+Gebaut mit Astro für maximale Performance und ein sauberes, schnelles Nutzererlebnis.
+
+---
+
+## Tech Stack
+
+| Bereich | Technologie |
+|---------|-------------|
+| Framework | Astro (Static Site Generator) |
+| Styling | Tailwind CSS |
+| Sprache | TypeScript |
+| Hosting | Vercel (Git Integration) |
+| Domain | timo-goetz-ai.de (Cloudflare DNS, HSTS aktiv) |
+
+---
+
+## Lokale Entwicklung
 
 ```bash
 npm install
-npm run dev       # http://localhost:4321
-npm run build     # Production build
+npm run dev       # → http://localhost:4321
+npm run build     # Produktions-Build
+npm run preview   # Build-Vorschau
 ```
 
-No environment variables required.
-
-## Structure
-
-```
-src/
-├── content/projects/   # Project entries (Markdown + frontmatter)
-├── layouts/            # BaseLayout
-├── pages/              # Routes: /, /about, /contact, /projects/[slug]
-└── styles/             # Global CSS (design tokens via CSS variables)
-```
-
-## Adding a Project
-
-Create `src/content/projects/my-project.md`:
-
-```yaml
----
-title: "Project Name"
-problem: "What problem does it solve?"
-solution: "How it solves it."
-stack: ["Tech", "Stack"]
-status: "live"   # live | dev | wip
-order: 5
-demo: "https://github.com/timo-goetz-ai/..."
-kpi: "Measurable outcome"
 ---
 
-Markdown content here.
+## Deployment
+
+Push auf `main` → Vercel baut automatisch und deployt.
+
+```
+Push → main → Vercel Build → timo-goetz-ai.de
 ```
 
-Push to `main` → Vercel deploys automatically.
+**DNS:** Cloudflare Zone `c68f3a3fe6d4e47c2ddfbfd062cf5cb8`
+- A-Record: `timo-goetz-ai.de` → Vercel IPs (DNS-only, nicht proxied)
+
+---
+
+## Projektstruktur
+
+```
+public-site/
+├── src/
+│   ├── pages/        # Astro Pages (Routing)
+│   ├── components/   # UI-Komponenten
+│   ├── layouts/      # Seiten-Layouts
+│   └── content/      # Projekt- & Content-Daten
+├── public/           # Statische Assets
+└── astro.config.mjs  # Astro-Konfiguration
+```
+
+---
+
+<div align="center">
+
+[timo-goetz-ai.de](https://timo-goetz-ai.de) &nbsp;·&nbsp; [automation-plus-ki.de](https://automation-plus-ki.de) &nbsp;·&nbsp; [GitHub Org](https://github.com/timo-goetz-ai)
+
+</div>
