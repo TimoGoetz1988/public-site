@@ -5,7 +5,7 @@
   <div class="mx-auto max-w-5xl px-6 py-24">
 
     <div class="flex items-center gap-4 mb-16">
-      <div style="background: var(--text);" class="w-8 h-px shrink-0"></div>
+      <div style="background: var(--accent);" class="w-8 h-px shrink-0"></div>
       <p style="color: var(--muted); letter-spacing: 0.12em;" class="text-xs uppercase">Kontakt</p>
     </div>
 
@@ -17,7 +17,7 @@
           class="text-4xl font-semibold tracking-tight mb-6"
         >
           Projekt? Frage?<br />
-          <span style="color: var(--subtle);">Schreib einfach.</span>
+          <span style="color: var(--muted);">Schreib einfach.</span>
         </h2>
         <p style="color: var(--muted);" class="text-base leading-relaxed mb-10">
           Ich bin offen für Freelance-Projekte, Kollaborationen und spannende Gespräche rund um KI-Automatisierung.
@@ -26,8 +26,8 @@
         <div class="flex flex-col gap-4">
           <a
             href="mailto:timo@timo-goetz-ai.de"
-            style="background: var(--text); color: var(--bg);"
-            class="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium rounded-sm hover:opacity-80 transition-opacity w-fit"
+            style="background: var(--accent); color: #ffffff;"
+            class="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium rounded-lg hover:opacity-90 transition-opacity w-fit shadow-sm"
           >
             E-Mail schreiben
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -38,8 +38,8 @@
             href="https://github.com/TimoGoetz1988"
             target="_blank"
             rel="noopener noreferrer"
-            style="color: var(--muted); border-bottom: 1px solid var(--subtle);"
-            class="text-sm pb-0.5 hover:opacity-60 transition-opacity w-fit"
+            style="color: var(--accent-2); border-bottom: 1px solid var(--border-2);"
+            class="text-sm pb-0.5 hover:opacity-80 transition-opacity w-fit"
           >
             GitHub ansehen
           </a>
@@ -47,15 +47,15 @@
       </div>
 
       <div
-        style="border: 1px solid var(--border); background: var(--bg);"
-        class="p-8 rounded-sm"
+        style="border: 1px solid var(--border); background: var(--bg-card);"
+        class="p-8 rounded-xl shadow-sm"
       >
         <p style="color: var(--subtle);" class="text-xs uppercase tracking-wide mb-6">Stack</p>
         <div class="grid grid-cols-2 gap-3">
           {['Python', 'TypeScript', 'Node.js', 'Astro', 'n8n', 'MCP', 'Coolify', 'Hetzner'].map(tech => (
             <span
               style="color: var(--muted); border: 1px solid var(--border);"
-              class="text-xs px-3 py-2 rounded-sm"
+              class="text-xs px-3 py-2 rounded-lg bg-[var(--bg)]"
             >
               {tech}
             </span>

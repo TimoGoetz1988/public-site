@@ -3,35 +3,35 @@ import { getCollection } from 'astro:content';
 
 const projects = (await getCollection('projects'))
   .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+
+const statusColor = (s: string) => s === 'live' ? 'var(--success)' : s === 'dev' ? 'var(--warning)' : 'var(--muted)';
+const statusBg = (s: string) => s === 'live' ? 'var(--success-dim)' : s === 'dev' ? 'var(--warning-dim)' : 'var(--accent-dim)';
 ---
 
-<section id="projects" style="background: var(--bg-2); border-top: 1px solid var(--border);">
+<section id="projects" style="border-top: 1px solid var(--border);">
   <div class="mx-auto max-w-5xl px-6 py-24">
 
-    <div class="flex items-center gap-4 mb-16">
-      <div style="background: var(--text);" class="w-8 h-px shrink-0"></div>
-      <p style="color: var(--muted); letter-spacing: 0.12em;" class="text-xs uppercase">Projekte</p>
+    <div class="flex items-center gap-3 mb-12">
+      <span style="background: var(--accent-2); width: 8px; height: 8px;" class="rounded-full inline-block"></span>
+      <p style="color: var(--accent); letter-spacing: 0.12em;" class="text-xs uppercase font-semibold">Projekte</p>
     </div>
 
-    <h2
-      style="color: var(--text);"
-      class="text-4xl md:text-5xl font-semibold tracking-tight mb-16"
-    >
-      Was der Markt braucht —<br />
-      <span style="color: var(--subtle);">und wie ich es löse.</span>
+    <h2 style="color: var(--text);" class="text-4xl md:text-5xl font-semibold tracking-tight mb-4">
+      Was der Markt braucht &mdash;
     </h2>
+    <p style="color: var(--muted);" class="text-lg mb-16">und wie ich es loese.</p>
 
-    <div class="grid md:grid-cols-2 gap-6">
+    <div class="grid md:grid-cols-2 gap-4">
       {projects.map((project) => (
         <a
           href={`/projects/${project.slug}`}
-          style="border: 1px solid var(--border); background: var(--bg);"
-          class="block p-8 rounded-sm hover:opacity-80 transition-opacity group"
+          style="border: 1px solid var(--border); background: var(--bg-card);"
+          class="block p-6 rounded-xl hover:border-[var(--accent-2)] hover:shadow-md transition-all group shadow-sm"
         >
-          <div class="flex items-start justify-between mb-6">
+          <div class="flex items-center justify-between mb-5">
             <span
-              style={`color: ${project.data.status === 'live' ? 'var(--text)' : 'var(--subtle)'}; border: 1px solid var(--border);`}
-              class="text-xs px-2 py-1 rounded-sm uppercase tracking-wide"
+              style={`color: ${statusColor(project.data.status)}; background: ${statusBg(project.data.status)};`}
+              class="text-xs px-2.5 py-1 rounded font-mono font-medium"
             >
               {project.data.status}
             </span>
@@ -39,25 +39,25 @@ const projects = (await getCollection('projects'))
               width="14" height="14" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
               style="color: var(--subtle);"
-              class="group-hover:translate-x-0.5 transition-transform mt-1"
+              class="group-hover:translate-x-1 group-hover:text-[var(--accent-2)] transition-all"
             >
               <path d="M5 12h14M12 5l7 7-7 7"/>
             </svg>
           </div>
 
-          <h3 style="color: var(--text);" class="text-xl font-semibold mb-3">
+          <h3 style="color: var(--text);" class="text-lg font-semibold mb-2">
             {project.data.title}
           </h3>
 
-          <p style="color: var(--muted);" class="text-sm leading-relaxed mb-6">
+          <p style="color: var(--muted);" class="text-sm leading-relaxed mb-5">
             {project.data.solution}
           </p>
 
-          <div class="flex flex-wrap gap-2">
+          <div class="flex flex-wrap gap-1.5">
             {project.data.stack.map((tech: string) => (
               <span
-                style="color: var(--subtle); border: 1px solid var(--border);"
-                class="text-xs px-2 py-1 rounded-sm"
+                style="color: var(--muted); background: var(--accent-dim);"
+                class="text-xs px-2 py-1 rounded font-mono"
               >
                 {tech}
               </span>
@@ -67,15 +67,17 @@ const projects = (await getCollection('projects'))
       ))}
     </div>
 
-    <div class="mt-12">
+    <div class="mt-10">
       <a
         href="/projects"
-        style="color: var(--muted); border-bottom: 1px solid var(--subtle);"
-        class="text-sm pb-0.5 hover:opacity-60 transition-opacity"
+        style="color: var(--accent-2);"
+        class="text-sm hover:underline transition-all inline-flex items-center gap-2"
       >
         Alle Projekte ansehen
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
       </a>
     </div>
-
   </div>
 </section>

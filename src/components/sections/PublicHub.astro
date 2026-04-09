@@ -1,0 +1,56 @@
+---
+const groups = [
+  {
+    title: 'Automation + KI',
+    items: [
+      { label: 'Infra-Dashboard', href: 'https://infra.automation-plus-ki.de', hint: 'Status & Services' },
+      { label: 'Admin', href: 'https://admin.automation-plus-ki.de', hint: 'SSO' },
+      { label: 'Dashboard', href: 'https://dashboard.automation-plus-ki.de', hint: 'Homepage' },
+    ],
+  },
+  {
+    title: 'Öffentliche Tools',
+    items: [
+      { label: 'n8n', href: 'https://n8n.automation-plus-ki.de', hint: 'SSO' },
+      { label: 'Grafana', href: 'https://grafana.automation-plus-ki.de', hint: 'SSO' },
+      { label: 'Directus', href: 'https://directus.automation-plus-ki.de', hint: 'CMS' },
+    ],
+  },
+];
+---
+
+<section id="hub" style="border-top: 1px solid var(--border);">
+  <div class="mx-auto max-w-5xl px-6 py-20">
+    <div class="rounded-xl p-8 md:p-10 text-white shadow-md" style="background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);">
+      <p class="text-xs uppercase tracking-[0.15em] opacity-90 mb-3">Öffentliche Ressourcen</p>
+      <h2 class="text-2xl md:text-3xl font-semibold tracking-tight mb-2">
+        Automation + KI — Schnellzugriff
+      </h2>
+      <p class="text-sm opacity-90 max-w-2xl mb-8">
+        Zentrale Einstiegspunkte zur Plattform. Einige Dienste erfordern Authentik-SSO oder Tailscale.
+      </p>
+      <div class="grid md:grid-cols-2 gap-8">
+        {groups.map((g) => (
+          <div>
+            <p class="text-xs uppercase tracking-widest opacity-80 mb-4">{g.title}</p>
+            <ul class="space-y-3">
+              {g.items.map((it) => (
+                <li>
+                  <a
+                    href={it.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="flex items-center justify-between gap-4 rounded-lg bg-white/10 hover:bg-white/15 px-4 py-3 transition-colors border border-white/10"
+                  >
+                    <span class="text-sm font-medium">{it.label}</span>
+                    <span class="text-xs opacity-80 font-mono">{it.hint}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

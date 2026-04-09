@@ -1,96 +1,121 @@
 ---
-// To add your photo: place timo-goetz.jpg in src/assets/ and uncomment the Image import below.
-// import { Image } from 'astro:assets';
-// import photo from '../../assets/timo-goetz.jpg';
-const hasPhoto = false; // set to true after adding src/assets/timo-goetz.jpg
 ---
 
-<section class="min-h-screen flex items-center">
-  <div class="mx-auto max-w-5xl px-6 w-full pt-24 pb-20">
+<section class="min-h-screen flex items-center relative overflow-hidden bg-[var(--bg)]">
+  <div
+    class="absolute inset-0"
+    style="background-image: radial-gradient(rgba(15,23,42,0.06) 1px, transparent 1px); background-size: 32px 32px;"
+  ></div>
+  <div
+    class="absolute top-1/4 left-1/4 w-96 h-96 rounded-full"
+    style="background: radial-gradient(circle, rgba(37,99,235,0.08) 0%, transparent 70%);"
+  ></div>
 
-    <div class="grid md:grid-cols-2 gap-16 items-center">
+  <div class="mx-auto max-w-5xl px-6 w-full pt-24 pb-20 relative z-10">
+    <div class="grid md:grid-cols-5 gap-16 items-center">
 
-      <!-- Left: Text -->
-      <div>
-        <!-- Overline -->
-        <div class="flex items-center gap-4 mb-12">
-          <div style="background: var(--text);" class="w-8 h-px shrink-0"></div>
+      <div class="md:col-span-3">
+        <div class="flex items-center gap-3 mb-10">
+          <span style="background: var(--accent-2); width: 8px; height: 8px;" class="rounded-full inline-block animate-pulse"></span>
+          <p style="color: var(--accent); letter-spacing: 0.12em;" class="text-xs uppercase font-medium">
+            System Online
+          </p>
+          <span style="color: var(--subtle);" class="text-xs">|</span>
           <p style="color: var(--muted); letter-spacing: 0.12em;" class="text-xs uppercase">
-            KI-Beauftragter · DEKRA zertifiziert
+            KI-Beauftragter &middot; DEKRA zertifiziert
           </p>
         </div>
 
-        <!-- H1 -->
         <h1
-          style="color: var(--text); line-height: 1.05;"
-          class="text-6xl md:text-7xl font-semibold tracking-tight mb-10"
+          style="color: var(--text); line-height: 1.08;"
+          class="text-5xl md:text-7xl font-semibold tracking-tight mb-8"
         >
           KI-Beauftragter<br />
-          mit Führungs-<br />
-          <span style="color: var(--subtle);">erfahrung.</span>
+          mit Fuehrungs-<br />
+          <span style="color: var(--accent-2);">erfahrung.</span>
         </h1>
 
-        <!-- Sub -->
-        <p
-          style="color: var(--muted);"
-          class="text-lg leading-relaxed max-w-md mb-12"
-        >
-          Ich baue Automatisierungen, die funktionieren —
+        <p style="color: var(--muted);" class="text-lg leading-relaxed max-w-lg mb-10">
+          Ich baue Automatisierungen, die funktionieren &mdash;
           weil ich die Prozesse dahinter kenne.
         </p>
 
-        <!-- CTAs -->
-        <div class="flex flex-wrap items-center gap-6">
+        <div class="flex flex-wrap items-center gap-4">
           <a
             href="/projects"
-            style="background: var(--text); color: var(--bg);"
-            class="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium rounded-sm hover:opacity-80 transition-opacity"
+            style="background: var(--accent); color: #ffffff;"
+            class="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded-lg hover:opacity-90 transition-opacity shadow-sm"
           >
             Projekte ansehen
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M5 12h14M12 5l7 7-7 7"/>
             </svg>
           </a>
-
           <a
             href="/about"
-            style="color: var(--muted); border-bottom: 1px solid var(--subtle);"
-            class="text-sm pb-0.5 hover:opacity-60 transition-opacity"
+            style="color: var(--muted); border: 1px solid var(--border-2); background: var(--bg-2);"
+            class="inline-flex items-center gap-2 px-6 py-3 text-sm rounded-lg hover:border-[var(--accent-2)] transition-colors"
           >
-            Über mich
+            Ueber mich
           </a>
         </div>
+      </div>
 
-        <!-- Meta row -->
-        <div
-          style="border-top: 1px solid var(--border); color: var(--subtle);"
-          class="flex flex-wrap gap-8 mt-24 pt-8 text-xs"
-        >
-          {['Python', 'Prompt Engineering', 'MCP', 'n8n', 'Abschluss 1,0'].map(s => (
-            <span>{s}</span>
-          ))}
+      <div class="hidden md:block md:col-span-2 space-y-5">
+        <div class="rounded-xl overflow-hidden border border-[var(--border)] shadow-sm bg-[var(--bg-2)]">
+          <img
+            src="/timo-goetz.png"
+            alt="Timo Goetz"
+            width="440"
+            height="520"
+            class="w-full h-auto object-cover object-top"
+            loading="eager"
+          />
+        </div>
+        <div style="background: var(--bg-card); border: 1px solid var(--border);" class="rounded-xl p-6 shadow-sm">
+          <p style="color: var(--accent); letter-spacing: 0.1em;" class="text-xs uppercase font-semibold mb-5">Stack &amp; Skills</p>
+
+          <div class="space-y-3">
+            {[
+              { label: 'Python & TypeScript', status: 'active' },
+              { label: 'n8n Workflows', status: 'active' },
+              { label: 'MCP Server', status: 'active' },
+              { label: 'Coolify / Hetzner', status: 'active' },
+              { label: 'Prompt Engineering', status: 'active' },
+            ].map(({ label, status }) => (
+              <div class="flex items-center justify-between">
+                <span style="color: var(--text);" class="text-sm">{label}</span>
+                <div class="flex items-center gap-2">
+                  <span style="background: var(--success); width: 6px; height: 6px;" class="rounded-full inline-block"></span>
+                  <span style="color: var(--success);" class="text-xs font-mono">{status}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div style="border-top: 1px solid var(--border);" class="mt-5 pt-5">
+            <div class="flex items-center justify-between">
+              <span style="color: var(--subtle);" class="text-xs">Abschluss</span>
+              <span style="color: var(--accent-2);" class="text-sm font-semibold font-mono">1,0</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Right: Photo (placeholder until timo-goetz.jpg is added) -->
-      <div class="hidden md:flex justify-center items-center">
-        <!--
-          After adding src/assets/timo-goetz.jpg, replace this div with:
-          <Image src={photo} alt="Timo Goetz" width={400} height={400}
-            class="rounded-full object-cover"
-            style="box-shadow: 0 20px 60px rgba(0,0,0,0.12);"
-            loading="eager" />
-        -->
-        <div
-          style="width: 320px; height: 320px; border-radius: 50%; background: var(--bg-2); border: 1px solid var(--border);"
-          class="flex items-center justify-center"
-        >
-          <span style="color: var(--subtle);" class="text-xs text-center px-8">
-            Foto hinzufügen:<br />src/assets/timo-goetz.jpg
-          </span>
-        </div>
-      </div>
+    </div>
 
+    <div style="border-top: 1px solid var(--border);" class="flex flex-wrap gap-12 mt-20 pt-8">
+      {[
+        { label: 'Projekte', value: '5+', color: 'var(--accent-2)' },
+        { label: 'MCP Server', value: '15', color: 'var(--accent-2)' },
+        { label: 'Workflows', value: '20+', color: 'var(--accent)' },
+        { label: 'Uptime', value: '47d', color: 'var(--accent-2)' },
+      ].map(({ label, value, color }) => (
+        <div>
+          <p style={`color: ${color};`} class="text-2xl font-semibold font-mono">{value}</p>
+          <p style="color: var(--subtle);" class="text-xs mt-1">{label}</p>
+        </div>
+      ))}
     </div>
   </div>
 </section>
