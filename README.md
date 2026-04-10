@@ -79,11 +79,15 @@ public-site/
 
 </div>
 
-## Kontakt: Google Forms
+## Kontakt: Google Forms (Workspace)
 
-1. Formular in [Google Forms](https://docs.google.com/forms/) erstellen.
-2. **Senden** → Link kopieren (endet auf `/viewform`).
-3. Beim Build/Deploy `PUBLIC_GOOGLE_FORM_URL` setzen (z. B. in Coolify/Vercel/GitHub Actions). Astro bettet das Formular auf `/contact` ein.
+**Empfehlung:** Formular mit dem **Google-Workspace-Account** deiner Organisation anlegen (nicht privates Gmail), damit Markenauftritt, Zugriffsrechte und ggf. **Auftragsverarbeitung** mit Google konsistent bleiben.
+
+1. In [Google Forms](https://docs.google.com/forms/) einloggen (Workspace).
+2. Formular bauen → Tab **Antworten** → **Antworten in Tabellen ansehen** (Ziel-Spreadsheet im Workspace wählen oder neu anlegen).
+3. **Senden** → Link kopieren (endet auf `/viewform`).
+4. Beim Build/Deploy **`PUBLIC_GOOGLE_FORM_URL`** setzen (Coolify / GitHub Actions / Vercel). Astro bettet das Formular auf **`/contact`** ein.
+5. Im **Google Admin** (Workspace) bei Bedarf DPA / Datenverarbeitung prüfen — Text auf **`/datenschutz`** rechtlich finalisieren.
 
 Siehe `.env.example`.
 
