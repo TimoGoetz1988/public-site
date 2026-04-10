@@ -140,7 +140,37 @@ declare module 'astro:content' {
 	>;
 
 	type ContentEntryMap = {
-		"projects": {
+		"blog": {
+"blogify-beispiel-automatisierung.md": {
+	id: "blogify-beispiel-automatisierung.md";
+  slug: "blogify-beispiel-automatisierung";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"von-handelsfachwirt-zum-ki-beauftragten.md": {
+	id: "von-handelsfachwirt-zum-ki-beauftragten.md";
+  slug: "von-handelsfachwirt-zum-ki-beauftragten";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+};
+"projects": {
+"control-center.md": {
+	id: "control-center.md";
+  slug: "control-center";
+  body: string;
+  collection: "projects";
+  data: InferEntrySchema<"projects">
+} & { render(): Render[".md"] };
+"core-platform.md": {
+	id: "core-platform.md";
+  slug: "core-platform";
+  body: string;
+  collection: "projects";
+  data: InferEntrySchema<"projects">
+} & { render(): Render[".md"] };
 "mcp-productivity-suite.md": {
 	id: "mcp-productivity-suite.md";
   slug: "mcp-productivity-suite";

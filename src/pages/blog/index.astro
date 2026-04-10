@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+---
+
+<BaseLayout
+  title="Blog — Timo Goetz"
+  description="Artikel und Notizen zu KI, Automatisierung und Produktivität — teils mit Verweis auf externe Volltexte."
+>
+  <div class="mx-auto max-w-5xl px-6 pt-32 pb-24">
+    <div class="flex items-center gap-4 mb-16">
+      <div style="background: var(--text);" class="w-8 h-px shrink-0"></div>
+      <p style="color: var(--muted); letter-spacing: 0.12em;" class="text-xs uppercase">Blog</p>
+    </div>
+
+    <h1
+      style="color: var(--text);"
+      class="text-5xl md:text-6xl font-semibold tracking-tight mb-6"
+    >
+      Schreiben &amp; Einordnung
+    </h1>
+    <p style="color: var(--muted);" class="text-lg leading-relaxed max-w-2xl mb-20">
+      Kurze Teaser hier; längere Texte können auf Blogify oder einem anderen Kanal liegen — verlinkt über <code class="text-sm" style="color: var(--subtle);">externalUrl</code> im Frontmatter.
+    </p>
+
+    <div class="flex flex-col gap-10">
+      {posts.map((post) => (
+        <article
+          style="border: 1px solid var(--border); background: var(--bg-2);"
+          class="rounded-sm p-8 md:p-10"
+        >
+          <div class="flex flex-wrap items-center gap-3 mb-4">
+            <time
+              datetime={post.data.date.toISOString()}
+              style="color: var(--subtle);"
+              class="text-xs uppercase tracking-wide"
+            >
+              {post.data.date.toLocaleDateString('de-DE', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+              })}
+            </time>
+            {post.data.externalUrl && (
+              <span
+                style="color: var(--accent-2); border: 1px solid var(--border);"
+                class="text-xs px-2 py-0.5 rounded-sm"
+              >
+                Extern
+              </span>
+            )}
+            {post.data.featured && (
+              <span
+                style="color: var(--text); border: 1px solid var(--border);"
+                class="text-xs px-2 py-0.5 rounded-sm"
+              >
+                Featured
+              </span>
+            )}
+          </div>
+          <h2 style="color: var(--text);" class="text-2xl font-semibold tracking-tight mb-3">
+            <a href={`/blog/${post.slug}`} class="hover:opacity-80 transition-opacity">
+              {post.data.title}
+            </a>
+          </h2>
+          <p style="color: var(--muted);" class="text-sm leading-relaxed mb-6 max-w-2xl">
+            {post.data.description}
+          </p>
+          {post.data.tags && post.data.tags.length > 0 && (
+            <div class="flex flex-wrap gap-2">
+              {post.data.tags.map((tag) => (
+                <span
+                  style="color: var(--subtle); border: 1px solid var(--border);"
+                  class="text-xs px-2 py-1 rounded-sm"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+        </article>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

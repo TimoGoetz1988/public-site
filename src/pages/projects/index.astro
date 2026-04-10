@@ -34,13 +34,23 @@ const projects = (await getCollection('projects'))
           style="border: 1px solid var(--border); background: var(--bg-2);"
           class="block p-8 rounded-sm hover:opacity-80 transition-opacity group"
         >
-          <div class="flex items-start justify-between mb-6">
+          <div class="flex items-start justify-between mb-6 gap-2 flex-wrap">
+            <div class="flex flex-wrap gap-2">
             <span
               style={`color: ${project.data.status === 'live' ? 'var(--text)' : 'var(--subtle)'}; border: 1px solid var(--border);`}
               class="text-xs px-2 py-1 rounded-sm uppercase tracking-wide"
             >
               {project.data.status}
             </span>
+            {project.data.externalUrl && (
+              <span
+                style="color: var(--accent-2); border: 1px solid var(--border);"
+                class="text-xs px-2 py-1 rounded-sm uppercase tracking-wide"
+              >
+                Extern
+              </span>
+            )}
+            </div>
             <svg
               width="14" height="14" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"

@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const projects = await getCollection('projects');
+type Item = { src: string; label: string; href: string };
+const items: Item[] = [];
+for (const p of projects) {
+  const g = p.data.gallery ?? [];
+  for (const src of g) {
+    items.push({ src, label: p.data.title, href: `/projects/${p.slug}` });
+  }
+}
+---
+
+<BaseLayout
+  title="Galerie — Timo Goetz"
+  description="Bilder und Screenshots aus ausgewählten Projekten."
+>
+  <div class="mx-auto max-w-5xl px-6 pt-32 pb-24">
+    <div class="flex items-center gap-4 mb-16">
+      <div style="background: var(--text);" class="w-8 h-px shrink-0"></div>
+      <p style="color: var(--muted); letter-spacing: 0.12em;" class="text-xs uppercase">Galerie</p>
+    </div>
+
+    <h1 style="color: var(--text);" class="text-5xl md:text-6xl font-semibold tracking-tight mb-6">
+      Einblicke
+    </h1>
+    <p style="color: var(--muted);" class="text-lg leading-relaxed max-w-2xl mb-16">
+      Bilder kommen aus dem Frontmatter-Feld <code class="text-sm" style="color: var(--subtle);">gallery</code> der Projekt-Dateien unter <code class="text-sm" style="color: var(--subtle);">src/content/projects/</code>.
+    </p>
+
+    {items.length === 0 ? (
+      <p style="color: var(--muted);" class="text-sm max-w-xl">
+        Noch keine Einträge — füge in einem Projekt z. B. <code style="color: var(--subtle);">gallery: [&quot;https://…&quot;]</code> hinzu.
+      </p>
+    ) : (
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+        {items.map((item) => (
+          <a
+            href={item.href}
+            class="group block overflow-hidden rounded-sm"
+            style="border: 1px solid var(--border); background: var(--bg-2);"
+          >
+            <img
+              src={item.src}
+              alt=""
+              class="w-full h-44 object-cover group-hover:opacity-90 transition-opacity"
+              loading="lazy"
+            />
+            <p style="color: var(--subtle);" class="text-xs px-3 py-2 truncate">
+              {item.label}
+            </p>
+          </a>
+        ))}
+      </div>
+    )}
+  </div>
+</BaseLayout>

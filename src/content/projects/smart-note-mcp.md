@@ -7,6 +7,9 @@ kpi: "Täglich verarbeitete Notizen, automatisch klassifiziert und ins Content-S
 demo: "https://github.com/timo-goetz-ai/smart-note-mcp"
 status: "live"
 order: 1
+gallery:
+  - "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&q=80&auto=format&fit=crop"
+  - "https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&q=80&auto=format&fit=crop"
 ---
 
 ## Was ist Smart Note MCP?

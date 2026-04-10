@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getCollection, getEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
@@ -12,6 +12,7 @@ export async function getStaticPaths() {
 
 const { project } = Astro.props;
 const { Content } = await project.render();
+const { cover, gallery, externalUrl, demo } = project.data;
 ---
 
 <BaseLayout
@@ -20,7 +21,6 @@ const { Content } = await project.render();
 >
   <div class="mx-auto max-w-3xl px-6 pt-32 pb-24">
 
-    <!-- Back -->
     <a
       href="/projects"
       style="color: var(--subtle);"
@@ -32,21 +32,33 @@ const { Content } = await project.render();
       Alle Projekte
     </a>
 
-    <!-- Header -->
-    <div class="flex items-center gap-4 mb-8">
+    <div class="flex items-center gap-4 mb-8 flex-wrap">
       <span
         style={`color: ${project.data.status === 'live' ? 'var(--text)' : 'var(--subtle)'}; border: 1px solid var(--border);`}
         class="text-xs px-2 py-1 rounded-sm uppercase tracking-wide"
       >
         {project.data.status}
       </span>
+      {externalUrl && (
+        <span
+          style="color: var(--accent-2); border: 1px solid var(--border);"
+          class="text-xs px-2 py-1 rounded-sm uppercase tracking-wide"
+        >
+          Extern verlinkt
+        </span>
+      )}
     </div>
 
-    <h1 style="color: var(--text);" class="text-4xl md:text-5xl font-semibold tracking-tight mb-6">
+    <h1 style="color: var(--text);" class="text-4xl md:text-5xl font-semibold tracking-tight mb-8">
       {project.data.title}
     </h1>
 
-    <!-- Problem / Lösung -->
+    {cover && (
+      <div class="mb-12 overflow-hidden rounded-sm" style="border: 1px solid var(--border);">
+        <img src={cover} alt="" class="w-full h-auto object-cover max-h-[420px]" loading="lazy" />
+      </div>
+    )}
+
     <div style="border: 1px solid var(--border); background: var(--bg-2);" class="rounded-sm p-6 mb-12 grid md:grid-cols-2 gap-6">
       <div>
         <p style="color: var(--subtle);" class="text-xs uppercase tracking-wide mb-2">Problem</p>
@@ -58,7 +70,6 @@ const { Content } = await project.render();
       </div>
     </div>
 
-    <!-- KPI -->
     {project.data.kpi && (
       <div style="border-left: 2px solid var(--text);" class="pl-6 mb-12">
         <p style="color: var(--subtle);" class="text-xs uppercase tracking-wide mb-1">Ergebnis</p>
@@ -66,7 +77,6 @@ const { Content } = await project.render();
       </div>
     )}
 
-    <!-- Stack -->
     <div class="mb-12">
       <p style="color: var(--subtle);" class="text-xs uppercase tracking-wide mb-4">Stack</p>
       <div class="flex flex-wrap gap-2">
@@ -78,26 +88,52 @@ const { Content } = await project.render();
       </div>
     </div>
 
-    <!-- Content from markdown -->
-    <div style="color: var(--muted);" class="prose prose-sm max-w-none mb-16">
+    <div style="color: var(--muted);" class="prose prose-sm max-w-none mb-12">
       <Content />
     </div>
 
-    <!-- Demo link -->
-    {project.data.demo && (
-      <a
-        href={project.data.demo}
-        target="_blank"
-        rel="noopener noreferrer"
-        style="background: var(--text); color: var(--bg);"
-        class="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium rounded-sm hover:opacity-80 transition-opacity"
-      >
-        Demo / GitHub
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
-        </svg>
-      </a>
+    {gallery && gallery.length > 0 && (
+      <div class="mb-12">
+        <p style="color: var(--subtle);" class="text-xs uppercase tracking-wide mb-4">Galerie</p>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+          {gallery.map((src) => (
+            <a href={src} target="_blank" rel="noopener noreferrer" class="block overflow-hidden rounded-sm" style="border: 1px solid var(--border);">
+              <img src={src} alt="" class="w-full h-32 object-cover hover:opacity-90 transition-opacity" loading="lazy" />
+            </a>
+          ))}
+        </div>
+      </div>
     )}
 
+    <div class="flex flex-col sm:flex-row gap-4 flex-wrap">
+      {demo && (
+        <a
+          href={demo}
+          target="_blank"
+          rel="noopener noreferrer"
+          style="background: var(--text); color: var(--bg);"
+          class="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium rounded-sm hover:opacity-80 transition-opacity"
+        >
+          Demo / Repo
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
+          </svg>
+        </a>
+      )}
+      {externalUrl && (
+        <a
+          href={externalUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          style="border: 1px solid var(--border); color: var(--text);"
+          class="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium rounded-sm hover:opacity-80 transition-opacity"
+        >
+          Externer Artikel / Produkt
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
+          </svg>
+        </a>
+      )}
+    </div>
   </div>
 </BaseLayout>

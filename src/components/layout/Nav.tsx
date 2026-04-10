@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react';
 
 const links = [
   { href: '/projects', label: 'Projekte' },
-  { href: '/about',    label: 'Über mich' },
-  { href: '/contact',  label: 'Kontakt' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/galerie', label: 'Galerie' },
+  { href: '/about', label: 'Über mich' },
+  { href: '/contact', label: 'Kontakt' },
 ];
 
 export default function Nav() {
