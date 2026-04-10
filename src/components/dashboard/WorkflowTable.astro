@@ -1,0 +1,85 @@
+---
+export interface WorkflowRow {
+  workflow_id: string;
+  workflow_name: string;
+  execution_count: number;
+  total_time_saved_minutes: number;
+  total_cost_usd: number;
+  total_value_usd: number;
+  roi_percent: number | null;
+  avg_time_per_exec_min?: number;
+}
+
+interface Props {
+  workflows: WorkflowRow[];
+}
+
+const { workflows } = Astro.props;
+
+const getRoiBadgeClass = (roi: number | null): string => {
+  if (roi === null) return 'neutral';
+  if (roi >= 500) return 'positive';
+  if (roi >= 100) return 'neutral';
+  return 'negative';
+};
+
+const fmtNumber = (n: number, decimals = 2) =>
+  Number.isFinite(n) ? n.toFixed(decimals) : '0.00';
+---
+
+<div class="table-container">
+  {workflows.length === 0 ? (
+    <div class="empty-state">
+      <strong>Noch keine Workflow-Daten.</strong>
+      Sobald n8n Executions an <code>POST /api/v1/executions</code> sendet,
+      erscheinen sie hier.
+    </div>
+  ) : (
+    <table>
+      <thead>
+        <tr>
+          <th>Workflow</th>
+          <th>Runs</th>
+          <th>Zeit gespart</th>
+          <th>⌀ pro Run</th>
+          <th>Kosten</th>
+          <th>Wert</th>
+          <th>ROI</th>
+        </tr>
+      </thead>
+      <tbody>
+        {workflows.map((w) => {
+          const avgMin =
+            w.avg_time_per_exec_min ??
+            (w.execution_count > 0 ? w.total_time_saved_minutes / w.execution_count : 0);
+          const hoursSaved = w.total_time_saved_minutes / 60;
+          return (
+            <tr>
+              <td>
+                <a href={`/workflows/${encodeURIComponent(w.workflow_id)}`}>
+                  {w.workflow_name}
+                </a>
+              </td>
+              <td>{w.execution_count}x</td>
+              <td>{fmtNumber(hoursSaved, 1)}h</td>
+              <td>{fmtNumber(avgMin, 1)}min</td>
+              <td>€{fmtNumber(w.total_cost_usd)}</td>
+              <td>€{fmtNumber(w.total_value_usd)}</td>
+              <td>
+                <span class={`roi-badge ${getRoiBadgeClass(w.roi_percent)}`}>
+                  {w.roi_percent === null ? '—' : `${w.roi_percent}%`}
+                </span>
+              </td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  )}
+</div>
+
+<style>
+  .table-container {
+    overflow-x: auto;
+  }
+</style>

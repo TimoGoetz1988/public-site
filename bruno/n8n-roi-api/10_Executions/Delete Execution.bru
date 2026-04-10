@@ -1,0 +1,27 @@
+meta {
+  name: Delete Execution
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{base_url}}/api/v1/executions/{{execution_id}}
+  body: none
+  auth: none
+}
+
+headers {
+  x-api-key: {{api_key}}
+}
+
+vars:pre-request {
+  execution_id: 00000000-0000-0000-0000-000000000000
+}
+
+assert {
+  res.status: in [200, 404]
+}
+
+docs {
+  Schreibender Endpoint — benötigt `x-api-key`.
+}

@@ -1,0 +1,39 @@
+meta {
+  name: Metrics Summary
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/api/v1/metrics/summary?days=30
+  body: none
+  auth: none
+}
+
+headers {
+  x-api-key: {{api_key}}
+}
+
+params:query {
+  days: 30
+}
+
+assert {
+  res.status: eq 200
+  res.body.data.period_days: eq 30
+}
+
+tests {
+  test("returns rollup fields", function() {
+    const d = res.body.data;
+    expect(d).to.have.all.keys(
+      "period_days",
+      "execution_count",
+      "time_saved_hours",
+      "total_cost_usd",
+      "total_value_usd",
+      "roi_percent",
+      "success_rate"
+    );
+  });
+}

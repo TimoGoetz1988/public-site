@@ -1,0 +1,23 @@
+meta {
+  name: Get Workflow
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base_url}}/api/v1/workflows/{{workflow_id}}?limit=50
+  body: none
+  auth: none
+}
+
+headers {
+  x-api-key: {{api_key}}
+}
+
+vars:pre-request {
+  workflow_id: wf_instagram_captions
+}
+
+assert {
+  res.status: in [200, 404]
+}

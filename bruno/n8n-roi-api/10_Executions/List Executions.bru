@@ -1,0 +1,29 @@
+meta {
+  name: List Executions
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base_url}}/api/v1/executions?limit=50&offset=0
+  body: none
+  auth: none
+}
+
+headers {
+  x-api-key: {{api_key}}
+}
+
+params:query {
+  limit: 50
+  offset: 0
+  ~workflow_id: wf_instagram_captions
+  ~status: success
+  ~from: 2026-03-01T00:00:00Z
+  ~to: 2026-04-10T23:59:59Z
+}
+
+assert {
+  res.status: eq 200
+  res.body.data.pagination.limit: eq 50
+}

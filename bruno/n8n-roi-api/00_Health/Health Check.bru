@@ -1,0 +1,21 @@
+meta {
+  name: Health Check
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/api/v1/health
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 200
+  res.body.data.status: eq ok
+}
+
+docs {
+  Liveness/Readiness Probe. Darf keine externen Dependencies berühren —
+  muss auch dann 200 liefern, wenn Supabase gerade kurz nicht erreichbar ist.
+}

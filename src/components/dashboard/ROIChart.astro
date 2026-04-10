@@ -1,0 +1,40 @@
+---
+interface ChartItem {
+  label: string;
+  value: number;
+}
+
+interface Props {
+  title?: string;
+  items: ChartItem[];
+  unit?: string;
+}
+
+const { title = 'ROI Verteilung', items, unit = '%' } = Astro.props;
+
+// Normalise bars against the largest absolute value so negative ROI still
+// renders visibly.
+const maxAbs = Math.max(1, ...items.map((i) => Math.abs(i.value)));
+---
+
+<section class="chart-section">
+  <h2>{title}</h2>
+  {items.length === 0 ? (
+    <div class="empty-state">Keine Daten für den Zeitraum.</div>
+  ) : (
+    <div class="roi-chart">
+      {items.map((item) => {
+        const pct = Math.max(3, (Math.abs(item.value) / maxAbs) * 100);
+        return (
+          <div class="roi-chart-row">
+            <div class="roi-chart-label" title={item.label}>{item.label}</div>
+            <div class="roi-chart-track">
+              <div class="roi-chart-fill" style={`width:${pct}%`} />
+            </div>
+            <div class="roi-chart-value">{item.value.toFixed(0)}{unit}</div>
+          </div>
+        );
+      })}
+    </div>
+  )}
+</section>

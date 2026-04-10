@@ -1,0 +1,137 @@
+---
+import DashboardLayout from '@/layouts/DashboardLayout.astro';
+import MetricCard from '@/components/dashboard/MetricCard.astro';
+import { getSupabase } from '@/lib/supabase';
+
+export const prerender = false;
+
+const { id } = Astro.params;
+if (!id) {
+  return Astro.redirect('/dashboard');
+}
+
+interface ExecutionRow {
+  id: string;
+  workflow_id: string;
+  workflow_name: string;
+  execution_date: string;
+  execution_time_ms: number | null;
+  time_saved_minutes: number | null;
+  total_cost: number | null;
+  estimated_value_usd: number | null;
+  status: string;
+  error_message: string | null;
+  tags: string[] | null;
+}
+
+let workflowName = id;
+let executions: ExecutionRow[] = [];
+let loadError: string | null = null;
+
+try {
+  const supabase = getSupabase();
+  const { data, error } = await supabase
+    .from('workflow_executions')
+    .select(
+      'id, workflow_id, workflow_name, execution_date, execution_time_ms, time_saved_minutes, total_cost, estimated_value_usd, status, error_message, tags',
+    )
+    .eq('workflow_id', id)
+    .order('execution_date', { ascending: false })
+    .limit(200);
+  if (error) throw error;
+  executions = data ?? [];
+  if (executions.length > 0) workflowName = executions[0].workflow_name;
+} catch (err) {
+  loadError = err instanceof Error ? err.message : 'Unknown error';
+}
+
+const num = (v: unknown) => Number(v ?? 0);
+const totalTimeMin = executions.reduce((s, e) => s + num(e.time_saved_minutes), 0);
+const totalCost    = executions.reduce((s, e) => s + num(e.total_cost), 0);
+const totalValue   = executions.reduce((s, e) => s + num(e.estimated_value_usd), 0);
+const roi          = totalCost > 0 ? ((totalValue - totalCost) / totalCost) * 100 : 0;
+const successCount = executions.filter((e) => e.status === 'success').length;
+const successRate  = executions.length > 0 ? (successCount / executions.length) * 100 : 0;
+---
+
+<DashboardLayout title={`${workflowName} · Workflow Detail`}>
+  <main class="dashboard">
+    <header class="dashboard-header">
+      <p><a href="/dashboard">← Zurück zum Dashboard</a></p>
+      <h1>{workflowName}</h1>
+      <p>Workflow-ID: <code>{id}</code> · {executions.length} Executions geladen</p>
+      {loadError && (
+        <p style="color: var(--red); margin-top: 0.5rem;">Fehler: {loadError}</p>
+      )}
+    </header>
+
+    <section class="metrics-grid">
+      <MetricCard
+        title="Zeit gespart"
+        value={`${(totalTimeMin / 60).toFixed(1)}h`}
+        subtitle={`${executions.length} Runs`}
+        icon="⏱️"
+      />
+      <MetricCard
+        title="Kosten"
+        value={`€${totalCost.toFixed(2)}`}
+        subtitle="Gesamt"
+        icon="💰"
+      />
+      <MetricCard
+        title="Wert"
+        value={`€${totalValue.toFixed(2)}`}
+        subtitle="Geschätzt"
+        icon="📈"
+      />
+      <MetricCard
+        title="ROI"
+        value={`${roi.toFixed(1)}%`}
+        subtitle={`Erfolgsrate ${successRate.toFixed(0)}%`}
+        icon="🎯"
+      />
+    </section>
+
+    <section class="workflows-section">
+      <h2>Letzte Executions</h2>
+      {executions.length === 0 ? (
+        <div class="empty-state">
+          <strong>Keine Executions gefunden.</strong>
+        </div>
+      ) : (
+        <div style="overflow-x:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>Datum</th>
+                <th>Status</th>
+                <th>Dauer</th>
+                <th>Zeit gespart</th>
+                <th>Kosten</th>
+                <th>Wert</th>
+                <th>Tags</th>
+              </tr>
+            </thead>
+            <tbody>
+              {executions.map((e) => (
+                <tr>
+                  <td>{new Date(e.execution_date).toLocaleString('de-DE')}</td>
+                  <td>
+                    <span class={`roi-badge ${e.status === 'success' ? 'positive' : e.status === 'error' ? 'negative' : 'neutral'}`}>
+                      {e.status}
+                    </span>
+                  </td>
+                  <td>{num(e.execution_time_ms)}ms</td>
+                  <td>{num(e.time_saved_minutes).toFixed(1)}min</td>
+                  <td>€{num(e.total_cost).toFixed(4)}</td>
+                  <td>€{num(e.estimated_value_usd).toFixed(2)}</td>
+                  <td>{(e.tags ?? []).join(', ') || '—'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </section>
+  </main>
+</DashboardLayout>

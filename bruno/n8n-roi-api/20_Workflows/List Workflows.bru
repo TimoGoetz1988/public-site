@@ -1,0 +1,33 @@
+meta {
+  name: List Workflows
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/api/v1/workflows?sort_by=roi&order=desc&limit=20
+  body: none
+  auth: none
+}
+
+headers {
+  x-api-key: {{api_key}}
+}
+
+params:query {
+  sort_by: roi
+  order: desc
+  limit: 20
+  ~from: 2026-03-01T00:00:00Z
+  ~to: 2026-04-10T23:59:59Z
+}
+
+assert {
+  res.status: eq 200
+}
+
+tests {
+  test("data is an array", function() {
+    expect(res.body.data).to.be.an("array");
+  });
+}

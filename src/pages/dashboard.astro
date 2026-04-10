@@ -1,0 +1,162 @@
+---
+import DashboardLayout from '@/layouts/DashboardLayout.astro';
+import MetricCard from '@/components/dashboard/MetricCard.astro';
+import WorkflowTable, { type WorkflowRow } from '@/components/dashboard/WorkflowTable.astro';
+import ROIChart from '@/components/dashboard/ROIChart.astro';
+import CostBreakdown from '@/components/dashboard/CostBreakdown.astro';
+import { getSupabase } from '@/lib/supabase';
+
+// Server-rendered on every request so the dashboard is always live.
+export const prerender = false;
+
+interface ExecutionRow {
+  workflow_id: string;
+  workflow_name: string;
+  execution_date: string;
+  time_saved_minutes: number | null;
+  total_cost: number | null;
+  estimated_value_usd: number | null;
+  api_cost: number | null;
+  infra_cost: number | null;
+  other_cost: number | null;
+  status: string;
+}
+
+const PERIOD_DAYS = Number(Astro.url.searchParams.get('days') ?? 30);
+const since = new Date(Date.now() - PERIOD_DAYS * 24 * 60 * 60 * 1000);
+
+let executions: ExecutionRow[] = [];
+let loadError: string | null = null;
+
+try {
+  const supabase = getSupabase();
+  const { data, error } = await supabase
+    .from('workflow_executions')
+    .select(
+      'workflow_id, workflow_name, execution_date, time_saved_minutes, total_cost, estimated_value_usd, api_cost, infra_cost, other_cost, status',
+    )
+    .gte('execution_date', since.toISOString())
+    .order('execution_date', { ascending: false });
+
+  if (error) throw error;
+  executions = data ?? [];
+} catch (err) {
+  loadError = err instanceof Error ? err.message : 'Unknown error loading data';
+}
+
+// ── Aggregations ──────────────────────────────────────
+const num = (v: unknown) => Number(v ?? 0);
+
+const totalTimeSavedMin = executions.reduce((s, e) => s + num(e.time_saved_minutes), 0);
+const totalCost         = executions.reduce((s, e) => s + num(e.total_cost), 0);
+const totalValue        = executions.reduce((s, e) => s + num(e.estimated_value_usd), 0);
+const totalApiCost      = executions.reduce((s, e) => s + num(e.api_cost), 0);
+const totalInfraCost    = executions.reduce((s, e) => s + num(e.infra_cost), 0);
+const totalOtherCost    = executions.reduce((s, e) => s + num(e.other_cost), 0);
+const successCount      = executions.filter((e) => e.status === 'success').length;
+
+const roi = totalCost > 0 ? ((totalValue - totalCost) / totalCost) * 100 : 0;
+const successRate = executions.length > 0 ? (successCount / executions.length) * 100 : 0;
+
+// Group by workflow
+const byWorkflow = new Map<string, WorkflowRow>();
+for (const e of executions) {
+  const existing = byWorkflow.get(e.workflow_id) ?? {
+    workflow_id: e.workflow_id,
+    workflow_name: e.workflow_name,
+    execution_count: 0,
+    total_time_saved_minutes: 0,
+    total_cost_usd: 0,
+    total_value_usd: 0,
+    roi_percent: null,
+  };
+  existing.execution_count += 1;
+  existing.total_time_saved_minutes += num(e.time_saved_minutes);
+  existing.total_cost_usd  += num(e.total_cost);
+  existing.total_value_usd += num(e.estimated_value_usd);
+  byWorkflow.set(e.workflow_id, existing);
+}
+
+const workflows: WorkflowRow[] = Array.from(byWorkflow.values())
+  .map((w) => ({
+    ...w,
+    roi_percent:
+      w.total_cost_usd > 0
+        ? Number((((w.total_value_usd - w.total_cost_usd) / w.total_cost_usd) * 100).toFixed(1))
+        : null,
+  }))
+  .sort((a, b) => (b.roi_percent ?? -Infinity) - (a.roi_percent ?? -Infinity));
+
+const chartItems = workflows
+  .filter((w) => w.roi_percent !== null)
+  .slice(0, 10)
+  .map((w) => ({ label: w.workflow_name, value: w.roi_percent as number }));
+---
+
+<DashboardLayout title="N8N Workflow ROI Dashboard">
+  <main class="dashboard">
+    <header class="dashboard-header">
+      <h1>Workflow ROI Dashboard</h1>
+      <p>
+        Letzte {PERIOD_DAYS} Tage · {executions.length} Executions ·
+        <a href="?days=7">7T</a> · <a href="?days=30">30T</a> · <a href="?days=90">90T</a>
+      </p>
+      {loadError && (
+        <p style="color: var(--red); margin-top: 0.5rem;">
+          Fehler beim Laden: {loadError}
+        </p>
+      )}
+    </header>
+
+    <section class="metrics-grid">
+      <MetricCard
+        title="Zeit gespart"
+        value={`${(totalTimeSavedMin / 60).toFixed(1)}h`}
+        subtitle={`${PERIOD_DAYS} Tage`}
+        icon="⏱️"
+        color="blue"
+      />
+      <MetricCard
+        title="Total Kosten"
+        value={`€${totalCost.toFixed(2)}`}
+        subtitle="API + Infrastruktur"
+        icon="💰"
+        color="red"
+      />
+      <MetricCard
+        title="Wert generiert"
+        value={`€${totalValue.toFixed(2)}`}
+        subtitle="Geschätzter Nutzen"
+        icon="📈"
+        color="green"
+      />
+      <MetricCard
+        title="ROI"
+        value={`${roi.toFixed(1)}%`}
+        subtitle="Return on Investment"
+        icon="🎯"
+        color="purple"
+      />
+      <MetricCard
+        title="Erfolgsrate"
+        value={`${successRate.toFixed(1)}%`}
+        subtitle={`${successCount} / ${executions.length} erfolgreich`}
+        icon="✅"
+        color="green"
+      />
+    </section>
+
+    <ROIChart title="Top-Workflows nach ROI" items={chartItems} unit="%" />
+
+    <CostBreakdown
+      apiCost={totalApiCost}
+      infraCost={totalInfraCost}
+      otherCost={totalOtherCost}
+    />
+
+    <section class="workflows-section">
+      <h2>Workflows nach ROI</h2>
+      <WorkflowTable workflows={workflows} />
+    </section>
+  </main>
+</DashboardLayout>

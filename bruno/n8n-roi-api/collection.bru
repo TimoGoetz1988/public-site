@@ -1,0 +1,31 @@
+meta {
+  name: N8N ROI API
+}
+
+auth {
+  mode: none
+}
+
+docs {
+  # N8N Workflow ROI API
+
+  REST-Schnittstelle, um n8n-Executions zu speichern und ROI-Kennzahlen
+  abzurufen. Wird vom Astro-Dashboard und von n8n selbst konsumiert.
+
+  ## Environments
+  - `Local`      → `http://localhost:4321`
+  - `Production` → `https://timo-goetz-ai.de`
+
+  ## Auth
+  Schreibende Endpoints (`POST /executions`, `DELETE /executions/:id`)
+  erwarten einen API-Key:
+  ```
+  x-api-key: {{api_key}}
+  ```
+  Den Key als Secret im Environment setzen — niemals in die Collection
+  committen.
+
+  ## Envelope
+  Erfolg: `{ "data": ... }`
+  Fehler: `{ "error": { "code": "...", "message": "...", "details": ... } }`
+}

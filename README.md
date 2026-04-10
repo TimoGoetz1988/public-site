@@ -24,13 +24,17 @@ Gebaut mit Astro für maximale Performance und ein sauberes, schnelles Nutzererl
 
 ## Tech Stack
 
-| Bereich | Technologie |
-|---------|-------------|
-| Framework | Astro (Static Site Generator) |
-| Styling | Tailwind CSS |
-| Sprache | TypeScript |
-| Hosting | Vercel (Git Integration) |
-| Domain | timo-goetz-ai.de (Cloudflare DNS, HSTS aktiv) |
+| Bereich   | Technologie                                            |
+|-----------|--------------------------------------------------------|
+| Framework | Astro 4 (hybrid: static Portfolio + SSR für Dashboard/API) |
+| Styling   | Tailwind CSS (Portfolio) + Custom CSS (Dashboard)      |
+| Sprache   | TypeScript (strict)                                    |
+| Backend   | Node SSR via `@astrojs/node` (standalone)              |
+| Datenbank | Supabase PostgreSQL (RLS aktiviert)                    |
+| API       | REST `/api/v1/*`, Zod-validiert, OpenAPI dokumentiert  |
+| Testing   | Bruno (Collection unter `bruno/n8n-roi-api`)           |
+| Hosting   | Docker → GHCR → Coolify → Hetzner                      |
+| Domain    | timo-goetz-ai.de (Cloudflare DNS, HSTS aktiv)          |
 
 ---
 
@@ -47,14 +51,15 @@ npm run preview   # Build-Vorschau
 
 ## Deployment
 
-Push auf `main` → Vercel baut automatisch und deployt.
+Push auf `main` → GitHub Actions baut das Docker-Image, pushed nach GHCR,
+triggert Coolify → Deploy auf Hetzner.
 
 ```
-Push → main → Vercel Build → timo-goetz-ai.de
+Push → main → GH Actions (build+push) → GHCR → Coolify → Hetzner
 ```
 
 **DNS:** Cloudflare Zone `c68f3a3fe6d4e47c2ddfbfd062cf5cb8`
-- A-Record: `timo-goetz-ai.de` → Vercel IPs (DNS-only, nicht proxied)
+- A-Record: `timo-goetz-ai.de` → Hetzner IP (DNS-only, nicht proxied)
 
 ---
 
@@ -63,12 +68,47 @@ Push → main → Vercel Build → timo-goetz-ai.de
 ```
 public-site/
 ├── src/
-│   ├── pages/        # Astro Pages (Routing)
-│   ├── components/   # UI-Komponenten
-│   ├── layouts/      # Seiten-Layouts
-│   └── content/      # Projekt- & Content-Daten
-├── public/           # Statische Assets
-└── astro.config.mjs  # Astro-Konfiguration
+│   ├── pages/
+│   │   ├── api/v1/     # REST API (SSR)
+│   │   ├── dashboard.astro
+│   │   ├── workflows/[id].astro
+│   │   └── ...         # Portfolio-Pages (prerendered)
+│   ├── components/
+│   │   ├── dashboard/  # Dashboard UI
+│   │   └── ...         # Portfolio UI
+│   ├── layouts/
+│   ├── lib/
+│   │   ├── supabase.ts   # DB clients (anon + service)
+│   │   └── api/          # auth, http helpers, Zod schemas
+│   ├── content/          # Projekt- & Blog-Content
+│   └── styles/
+├── bruno/n8n-roi-api/    # Bruno API-Collection
+├── supabase/migrations/  # SQL Schema
+├── docs/
+│   ├── api/README.md       # API-Doku
+│   └── dashboard/README.md # Dashboard-Doku
+├── n8n/README.md           # n8n Integration Guide
+├── public/
+├── Dockerfile              # Node SSR Runtime
+└── astro.config.mjs        # hybrid + @astrojs/node
+```
+
+## API & Dashboard
+
+Die `/dashboard`-Route und `/api/v1/*` Endpoints sind Teil dieses Repos —
+siehe [`docs/api/README.md`](docs/api/README.md) und
+[`docs/dashboard/README.md`](docs/dashboard/README.md). N8N-Integration:
+[`n8n/README.md`](n8n/README.md).
+
+```bash
+# Lokal
+cp .env.example .env      # Supabase-Credentials eintragen
+npm install
+npm run dev               # http://localhost:4321/dashboard
+
+# Production
+npm run build
+npm start                 # node ./dist/server/entry.mjs
 ```
 
 ---

@@ -1,0 +1,6 @@
+{
+  "version": "1",
+  "name": "N8N ROI API",
+  "type": "collection",
+  "ignore": ["node_modules", ".git"]
+}

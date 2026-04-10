@@ -1,0 +1,39 @@
+---
+interface Props {
+  apiCost: number;
+  infraCost: number;
+  otherCost: number;
+}
+
+const { apiCost, infraCost, otherCost } = Astro.props;
+const total = apiCost + infraCost + otherCost;
+
+const share = (n: number) => (total > 0 ? ((n / total) * 100).toFixed(1) : '0.0');
+const fmt = (n: number) => `€${n.toFixed(2)}`;
+---
+
+<section class="cost-breakdown-section">
+  <h2>Kostenaufschlüsselung</h2>
+  <div class="cost-breakdown">
+    <div class="cost-item">
+      <div class="cost-item-label">API / LLM</div>
+      <div class="cost-item-value">{fmt(apiCost)}</div>
+      <div class="cost-item-share">{share(apiCost)}% vom Total</div>
+    </div>
+    <div class="cost-item">
+      <div class="cost-item-label">Infrastruktur</div>
+      <div class="cost-item-value">{fmt(infraCost)}</div>
+      <div class="cost-item-share">{share(infraCost)}% vom Total</div>
+    </div>
+    <div class="cost-item">
+      <div class="cost-item-label">Sonstiges</div>
+      <div class="cost-item-value">{fmt(otherCost)}</div>
+      <div class="cost-item-share">{share(otherCost)}% vom Total</div>
+    </div>
+    <div class="cost-item" style="background:var(--bg-primary);border-color:var(--blue)">
+      <div class="cost-item-label">Gesamt</div>
+      <div class="cost-item-value">{fmt(total)}</div>
+      <div class="cost-item-share">Alle Kostenquellen</div>
+    </div>
+  </div>
+</section>
