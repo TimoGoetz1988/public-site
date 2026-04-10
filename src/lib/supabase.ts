@@ -1,17 +1,25 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 
 /**
- * Supabase clients — lazy-initialised so that builds don't crash when env
- * vars are missing at build time. The clients throw on first use if the
- * required env is not set.
+ * Supabase clients — lazy-initialised and read env at CALL time, not at
+ * module load time.
+ *
+ * Why not `import.meta.env`? Vite inlines `import.meta.env.PUBLIC_*` into
+ * the final bundle at build time. That would bake whatever value was set
+ * during `docker build` (e.g. the dummy placeholder) into the image —
+ * Coolify's runtime env would then be ignored.
+ *
+ * `process.env` is read fresh at function-call time, so the same Docker
+ * image can be deployed with any Supabase project by injecting real
+ * values at container start.
  */
-
-const PUBLIC_URL = import.meta.env.PUBLIC_SUPABASE_URL;
-const PUBLIC_ANON = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
-const SERVICE_KEY = import.meta.env.SUPABASE_SERVICE_ROLE_KEY;
 
 let _anonClient: SupabaseClient | null = null;
 let _serviceClient: SupabaseClient | null = null;
+
+function env(key: string): string | undefined {
+  return process.env[key];
+}
 
 /**
  * Anon client — respects RLS. Safe for server-side reads that should only
@@ -19,12 +27,16 @@ let _serviceClient: SupabaseClient | null = null;
  */
 export function getSupabase(): SupabaseClient {
   if (_anonClient) return _anonClient;
-  if (!PUBLIC_URL || !PUBLIC_ANON) {
+
+  const url = env('PUBLIC_SUPABASE_URL');
+  const anon = env('PUBLIC_SUPABASE_ANON_KEY');
+  if (!url || !anon) {
     throw new Error(
       'Supabase not configured: set PUBLIC_SUPABASE_URL and PUBLIC_SUPABASE_ANON_KEY',
     );
   }
-  _anonClient = createClient(PUBLIC_URL, PUBLIC_ANON, {
+
+  _anonClient = createClient(url, anon, {
     auth: { persistSession: false },
   });
   return _anonClient;
@@ -36,12 +48,16 @@ export function getSupabase(): SupabaseClient {
  */
 export function getSupabaseAdmin(): SupabaseClient {
   if (_serviceClient) return _serviceClient;
-  if (!PUBLIC_URL || !SERVICE_KEY) {
+
+  const url = env('PUBLIC_SUPABASE_URL');
+  const key = env('SUPABASE_SERVICE_ROLE_KEY');
+  if (!url || !key) {
     throw new Error(
       'Supabase admin not configured: set PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY',
     );
   }
-  _serviceClient = createClient(PUBLIC_URL, SERVICE_KEY, {
+
+  _serviceClient = createClient(url, key, {
     auth: { persistSession: false },
   });
   return _serviceClient;
