@@ -1,4 +1,18 @@
 ---
+const rawFormUrl = import.meta.env.PUBLIC_GOOGLE_FORM_URL as string | undefined;
+
+function toEmbedUrl(viewformUrl: string): string {
+  try {
+    const u = new URL(viewformUrl.trim());
+    if (u.hostname !== 'docs.google.com') return viewformUrl;
+    u.searchParams.set('embedded', 'true');
+    return u.toString();
+  } catch {
+    return viewformUrl;
+  }
+}
+
+const embedSrc = rawFormUrl && rawFormUrl.length > 0 ? toEmbedUrl(rawFormUrl) : null;
 ---
 
 <section id="contact" style="background: var(--bg-2); border-top: 1px solid var(--border);">
@@ -9,41 +23,85 @@
       <p style="color: var(--muted); letter-spacing: 0.12em;" class="text-xs uppercase">Kontakt</p>
     </div>
 
-    <div class="grid md:grid-cols-2 gap-16 items-center">
+    <div class="mb-16 max-w-2xl">
+      <h2
+        style="color: var(--text);"
+        class="text-4xl font-semibold tracking-tight mb-6"
+      >
+        Projekt? Frage?<br />
+        <span style="color: var(--muted);">Schreib einfach.</span>
+      </h2>
+      <p style="color: var(--muted);" class="text-base leading-relaxed">
+        Nutze das Formular (Google Forms) — Antworten landen in deinem Google-Ökosystem (Sheets, Benachrichtigungen, Automationen).
+        Alternativ weiterhin per E-Mail.
+      </p>
+    </div>
 
-      <div>
-        <h2
-          style="color: var(--text);"
-          class="text-4xl font-semibold tracking-tight mb-6"
+    {embedSrc ? (
+      <div
+        class="mb-16 overflow-hidden rounded-xl"
+        style="border: 1px solid var(--border); background: var(--bg-card);"
+      >
+        <iframe
+          title="Kontaktformular"
+          src={embedSrc}
+          class="w-full min-h-[920px] md:min-h-[980px]"
+          loading="lazy"
         >
-          Projekt? Frage?<br />
-          <span style="color: var(--muted);">Schreib einfach.</span>
-        </h2>
-        <p style="color: var(--muted);" class="text-base leading-relaxed mb-10">
-          Ich bin offen für Freelance-Projekte, Kollaborationen und spannende Gespräche rund um KI-Automatisierung.
+          Formular wird geladen…
+        </iframe>
+        <p style="color: var(--subtle);" class="text-xs px-4 py-3 border-t border-[var(--border)]">
+          Bereitgestellt über Google Forms — es gelten die Datenschutzhinweise von Google und die Angaben unter{' '}
+          <a href="/datenschutz" style="color: var(--accent-2);" class="underline-offset-2 hover:underline">Datenschutz</a>.
         </p>
+      </div>
+    ) : (
+      <div
+        class="mb-16 rounded-xl p-8"
+        style="border: 1px dashed var(--border); background: var(--bg-card);"
+      >
+        <p style="color: var(--muted);" class="text-sm leading-relaxed mb-4">
+          <strong style="color: var(--text);">Google Formular noch nicht verbunden.</strong>
+          Lege in Google Forms ein Kontaktformular an, kopiere die Teilen-URL (endet auf{' '}
+          <code class="text-xs" style="color: var(--subtle);">/viewform</code>
+          ) und setze sie als Umgebungsvariable{' '}
+          <code class="text-xs" style="color: var(--subtle);">PUBLIC_GOOGLE_FORM_URL</code>
+          beim Build/Deploy (siehe <code class="text-xs" style="color: var(--subtle);">.env.example</code>).
+        </p>
+        <a
+          href="https://docs.google.com/forms/"
+          target="_blank"
+          rel="noopener noreferrer"
+          style="color: var(--accent-2);"
+          class="text-sm hover:underline underline-offset-2"
+        >
+          Google Forms öffnen →
+        </a>
+      </div>
+    )}
 
-        <div class="flex flex-col gap-4">
-          <a
-            href="mailto:timo@timo-goetz-ai.de"
-            style="background: var(--accent); color: #ffffff;"
-            class="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium rounded-lg hover:opacity-90 transition-opacity w-fit shadow-sm"
-          >
-            E-Mail schreiben
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </a>
-          <a
-            href="https://github.com/TimoGoetz1988"
-            target="_blank"
-            rel="noopener noreferrer"
-            style="color: var(--accent-2); border-bottom: 1px solid var(--border-2);"
-            class="text-sm pb-0.5 hover:opacity-80 transition-opacity w-fit"
-          >
-            GitHub ansehen
-          </a>
-        </div>
+    <div class="grid md:grid-cols-2 gap-12 items-start">
+      <div class="flex flex-col gap-4">
+        <p style="color: var(--subtle);" class="text-xs uppercase tracking-wide">Direkt</p>
+        <a
+          href="mailto:timo@timo-goetz-ai.de"
+          style="background: var(--accent); color: #ffffff;"
+          class="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium rounded-lg hover:opacity-90 transition-opacity w-fit shadow-sm"
+        >
+          E-Mail schreiben
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+        <a
+          href="https://github.com/TimoGoetz1988"
+          target="_blank"
+          rel="noopener noreferrer"
+          style="color: var(--accent-2); border-bottom: 1px solid var(--border-2);"
+          class="text-sm pb-0.5 hover:opacity-80 transition-opacity w-fit"
+        >
+          GitHub ansehen
+        </a>
       </div>
 
       <div
@@ -52,7 +110,7 @@
       >
         <p style="color: var(--subtle);" class="text-xs uppercase tracking-wide mb-6">Stack</p>
         <div class="grid grid-cols-2 gap-3">
-          {['Python', 'TypeScript', 'Node.js', 'Astro', 'n8n', 'MCP', 'Coolify', 'Hetzner'].map(tech => (
+          {['Python', 'TypeScript', 'Node.js', 'Astro', 'n8n', 'MCP', 'Coolify', 'Hetzner'].map((tech) => (
             <span
               style="color: var(--muted); border: 1px solid var(--border);"
               class="text-xs px-3 py-2 rounded-lg bg-[var(--bg)]"
@@ -62,7 +120,6 @@
           ))}
         </div>
       </div>
-
     </div>
   </div>
 </section>

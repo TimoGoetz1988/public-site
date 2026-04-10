@@ -78,3 +78,12 @@ public-site/
 [timo-goetz-ai.de](https://timo-goetz-ai.de) &nbsp;·&nbsp; [automation-plus-ki.de](https://automation-plus-ki.de) &nbsp;·&nbsp; [GitHub Org](https://github.com/timo-goetz-ai)
 
 </div>
+
+## Kontakt: Google Forms
+
+1. Formular in [Google Forms](https://docs.google.com/forms/) erstellen.
+2. **Senden** → Link kopieren (endet auf `/viewform`).
+3. Beim Build/Deploy `PUBLIC_GOOGLE_FORM_URL` setzen (z. B. in Coolify/Vercel/GitHub Actions). Astro bettet das Formular auf `/contact` ein.
+
+Siehe `.env.example`.
+
