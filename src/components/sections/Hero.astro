@@ -1,82 +1,122 @@
 ---
-import MagneticButton from '../ui/MagneticButton.astro';
-import { Image } from 'astro:assets';
-import heroBg from '../../assets/hero-bg.jpg';
+// Headline + Subline: Placeholder — Timo gibt den finalen Text
 ---
 
-<section class="hero-section relative flex min-h-screen items-center overflow-hidden">
-<style>
-  .hero-section {
-    background:
-      radial-gradient(ellipse 80% 50% at 20% 30%, rgba(45, 106, 79, 0.06) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 40% at 75% 70%, rgba(200, 121, 65, 0.05) 0%, transparent 50%),
-      var(--bg);
-  }
-</style>
-  <div class="mx-auto w-full max-w-6xl px-6 pb-20 pt-28">
-    <div class="grid items-start gap-16 lg:grid-cols-[minmax(0,1.15fr)_420px]">
-      <div class="max-w-3xl">
-        <p style="color: var(--muted); letter-spacing: 0.14em;" class="mb-8 text-xs font-medium uppercase">
-          Forecasting-Spezialist · Perishable Operations · DACH
-        </p>
+<section class="relative flex min-h-screen items-center overflow-hidden">
 
-        <h1 style="color: var(--text); line-height: 1.02;" class="mb-8 text-5xl font-semibold tracking-tight md:text-6xl">
-          Weniger Verderb.<br />
-          Bessere Auslastung.<br />
-          Mehr Marge.
+  <!-- Gradient backdrop -->
+  <div
+    class="pointer-events-none absolute inset-0"
+    style="
+      background:
+        radial-gradient(ellipse 80% 55% at 50% -5%, rgba(124,111,255,0.14) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 40% at 88% 68%, rgba(62,207,142,0.05) 0%, transparent 50%);
+    "
+  ></div>
+
+  <!-- Subtle dot grid -->
+  <div
+    class="pointer-events-none absolute inset-0 opacity-[0.022]"
+    style="
+      background-image: radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1px);
+      background-size: 32px 32px;
+    "
+  ></div>
+
+  <div class="relative mx-auto w-full max-w-6xl px-6 pb-24 pt-32">
+    <div class="grid items-start gap-16 lg:grid-cols-[1fr_440px]">
+
+      <!-- Left -->
+      <div class="max-w-2xl">
+
+        <div class="mb-8 flex items-center gap-2.5">
+          <span class="live-dot"></span>
+          <span style="color:var(--muted); font-size:0.64rem; letter-spacing:0.14em;" class="font-semibold uppercase">
+            KI-Infrastruktur · Automation · DACH
+          </span>
+        </div>
+
+        <!-- ⚠️ PLACEHOLDER — Timo ersetzt diesen Text vor Launch -->
+        <h1
+          style="color:var(--text); line-height:1.03; letter-spacing:-0.025em;"
+          class="mb-6 text-[52px] font-semibold md:text-[60px] lg:text-[68px]"
+        >
+          [Deine Headline<br />
+          <span style="color:var(--muted);">kommt hier.]</span>
         </h1>
 
-        <p style="color: var(--muted);" class="mb-8 max-w-xl text-lg leading-relaxed">
-          ML-Prognose-Systeme für Fresh-Food-Retail,
-          Lebensmittelautomaten und Gastronomie.
+        <p style="color:var(--muted);" class="mb-10 max-w-lg text-lg leading-relaxed">
+          KI-Infrastruktur, die läuft — Analytics, Automation und Voice.
+          Von der Idee bis zum Deployment, alles selbst betrieben.
         </p>
 
-        <!-- Case Study Pill -->
-        <div
-          class="mb-10 inline-block rounded-lg px-4 py-3 text-sm"
-          style="border: 1px solid var(--border); background: var(--bg-card);"
-        >
-          <span class="font-mono text-xs uppercase tracking-widest" style="color: var(--subtle);">Case Study</span>
-          <p class="mt-1 text-sm" style="color: var(--text);">
-            DACH-Betreiber · Verderb messbar reduziert · ROI &lt;12 Monate
-          </p>
-        </div>
-
         <div class="flex flex-wrap items-center gap-4">
-          <MagneticButton text="Opportunity Scan — 2.500 €" href="#services" variant="primary" />
-          <MagneticButton text="Kostenloses 30-Min Discovery" href="#contact" variant="ghost-light" />
-        </div>
-      </div>
-
-      <div class="space-y-4">
-        <div class="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--bg-card)]">
-          <Image
-            src={heroBg}
-            width={420}
-            height={520}
-            format="webp"
-            quality={82}
-            alt="Frische Kräuter, Gemüse und Produkte auf warmer Leinenoberfläche — natürliches Licht, editoriale Qualität"
-            class="h-auto w-full object-cover"
-            loading="eager"
-            fetchpriority="high"
-          />
+          <a href="#contact" class="btn-primary">
+            Projekt besprechen
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+          <a href="#showcase" class="btn-ghost">
+            Was ich baue
+          </a>
         </div>
 
-        <div class="grid grid-cols-2 gap-3">
+        <div class="mt-14 flex flex-wrap gap-x-10 gap-y-6">
           {[
-            { label: 'Vertikal', value: '7' },
-            { label: 'Früheste Phase', value: 'Scan' },
-            { label: 'DACH', value: '✓' },
-            { label: 'DEKRA', value: 'Zert.' },
-          ].map(({ label, value }) => (
-            <div class="rounded-xl border border-[var(--border)] bg-[var(--bg-card)] px-4 py-4">
-              <p style="color: var(--text);" class="text-xl font-semibold">{value}</p>
-              <p style="color: var(--subtle);" class="mt-1 text-xs uppercase tracking-[0.08em]">{label}</p>
+            { value: '44', label: 'Workflows live' },
+            { value: '98%', label: 'Success rate' },
+            { value: '100%', label: 'Self-hosted' },
+            { value: 'DACH', label: 'Markt' },
+          ].map(({ value, label }) => (
+            <div>
+              <p style="color:var(--text); letter-spacing:-0.02em;" class="text-3xl font-semibold">{value}</p>
+              <p style="color:var(--subtle);" class="mt-1 text-xs uppercase tracking-widest">{label}</p>
             </div>
           ))}
         </div>
       </div>
+
+      <!-- Right: Terminal card -->
+      <div class="hidden lg:block self-center">
+        <div class="db-frame">
+          <div class="db-toolbar">
+            <span class="db-dot" style="background:#ff5f57;"></span>
+            <span class="db-dot" style="background:#febc2e;"></span>
+            <span class="db-dot" style="background:#28c840;"></span>
+            <span style="color:var(--subtle); font-size:0.58rem; margin-left:6px; font-family:'JetBrains Mono',monospace; letter-spacing:0.05em;">
+              system · live
+            </span>
+          </div>
+          <div class="p-5 font-mono text-xs space-y-0.5" style="color:var(--muted); line-height:1.85;">
+            <p><span style="color:var(--subtle);">~/</span> <span style="color:var(--green);">status</span> --all</p>
+            <p style="color:var(--subtle); padding: 2px 0;">────────────────────────</p>
+            <p>n8n workflows    <span style="color:var(--text); font-weight:600;">44 active</span></p>
+            <p>executions/day  <span style="color:var(--green);">312</span></p>
+            <p>success rate    <span style="color:var(--green);">98.4 %</span></p>
+            <p>errors (24h)    <span style="color:var(--amber);">2</span></p>
+            <p style="color:var(--subtle); padding: 2px 0;">────────────────────────</p>
+            <p>voice agent     <span style="color:var(--green);">online</span></p>
+            <p>model           <span style="color:var(--accent);">GPT-4o</span></p>
+            <p>TTS             <span style="color:var(--accent);">FishAudio v2</span></p>
+            <p style="color:var(--subtle); padding: 2px 0;">────────────────────────</p>
+            <p>supabase        <span style="color:var(--green);">● connected</span></p>
+            <p>dashboards      <span style="color:var(--text);">3 deployed</span></p>
+            <p>uptime          <span style="color:var(--green);">99.8 %</span></p>
+            <p style="color:var(--subtle); padding: 2px 0;">────────────────────────</p>
+            <p class="flex items-center gap-2 pt-1">
+              <span class="live-dot"></span>
+              <span style="color:var(--green);">All systems operational</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
+
+  <div
+    class="pointer-events-none absolute inset-x-0 bottom-0 h-36"
+    style="background: linear-gradient(to top, var(--bg), transparent);"
+  ></div>
 </section>

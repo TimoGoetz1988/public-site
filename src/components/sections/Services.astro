@@ -1,91 +1,91 @@
 ---
-import MagneticButton from '../ui/MagneticButton.astro';
-
-const services = [
+const offerings = [
   {
-    name: 'Opportunity Scan',
+    id: '01',
+    name: 'Discovery Sprint',
     duration: '2 Tage',
     price: 'ab 2.500 €',
-    description:
-      'Wir analysieren deine Daten-Situation und quantifizieren das Einsparpotential. Output: klarer Befund + Handlungsempfehlung.',
-    deliverable: 'Befund-Dokument + Handlungsempfehlung',
+    description: 'Stack-Analyse, Prozess-Mapping, Automatisierungs-Hebel identifizieren. Output: Befund + Roadmap.',
+    deliverable: 'Befund-Dokument + priorisierte Roadmap',
     highlight: false,
   },
   {
-    name: 'Pilot-Forecast',
-    duration: '6–8 Wochen',
-    price: 'ab 25.000 €',
-    description:
-      'Vollständiges ML-Prognose-Modell für einen Standort oder eine Warengruppe. Inklusive Integration und KPI-Tracking.',
-    deliverable: 'Produktives Modell + Monitoring',
+    id: '02',
+    name: 'Build',
+    duration: '4–8 Wochen',
+    price: 'ab 15.000 €',
+    description: 'Vollständige Umsetzung — Analytics, Automation oder Voice Platform. Vom Setup bis zum produktiven Deploy.',
+    deliverable: 'Produktivsystem + Dokumentation + Monitoring',
     highlight: true,
   },
   {
-    name: 'Scale + Betrieb',
+    id: '03',
+    name: 'Operate',
     duration: 'Retainer',
-    price: 'ab 4.000 €/Monat',
-    description:
-      'Ausrollung auf alle Standorte, laufendes Modell-Tuning, Reporting und Weiterentwicklung.',
-    deliverable: 'SLA + monatliches Reporting',
+    price: 'ab 3.000 €/Monat',
+    description: 'Laufende Betreuung, Weiterentwicklung, Monitoring. Systeme laufen — du fokussierst dich aufs Geschäft.',
+    deliverable: 'SLA + monatliches Reporting + Updates',
     highlight: false,
   },
 ];
 ---
 
-<section id="services" style="border-top: 1px solid var(--border); background: var(--bg);">
-  <div class="mx-auto max-w-5xl px-6 py-24">
+<section id="services" style="border-top: 1px solid var(--border);">
+  <div class="mx-auto max-w-6xl px-6 py-28">
 
-    <!-- Section label -->
-    <div class="mb-12 flex items-center gap-3">
-      <div class="h-px w-8" style="background: var(--border-2);"></div>
-      <span class="text-xs font-medium uppercase tracking-widest" style="color: var(--muted);">Angebote</span>
+    <div class="mb-5">
+      <span class="section-label">Angebote</span>
     </div>
 
-    <!-- Headline -->
-    <h2 class="text-3xl font-semibold tracking-tight md:text-4xl" style="color: var(--text);">
-      Drei Wege zur Zusammenarbeit.
-    </h2>
+    <div class="mb-16 grid gap-4 md:grid-cols-2 md:items-end">
+      <h2 style="color:var(--text); letter-spacing:-0.02em;" class="text-4xl font-semibold md:text-5xl">
+        Drei Wege.<br />
+        <span style="color:var(--muted);">Einer baut.</span>
+      </h2>
+      <p style="color:var(--muted);" class="text-base leading-relaxed md:max-w-sm md:ml-auto">
+        Kein Team von 20. Kein Overhead. Direkte Zusammenarbeit — von der ersten Analyse bis zum laufenden System.
+      </p>
+    </div>
 
-    <!-- Cards grid -->
-    <div class="mt-12 grid gap-6 md:grid-cols-3">
-      {services.map((s) => (
+    <div class="grid gap-5 md:grid-cols-3">
+      {offerings.map((o) => (
         <div
-          class={`relative flex flex-col rounded-xl px-6 py-6 ${s.highlight ? 'ring-1 ring-[var(--text)]' : ''}`}
-          style={`border: 1px solid var(--border); background: var(--bg-card);`}
+          class={`relative flex flex-col rounded-xl p-6 card-glow ${o.highlight ? 'ring-1' : ''}`}
+          style={`border:1px solid var(--border); background:var(--bg-card); ${o.highlight ? 'ring-color:var(--accent); box-shadow:0 0 40px rgba(124,111,255,0.08);' : ''}`}
         >
-          {s.highlight && (
+          {o.highlight && (
             <div class="absolute -top-3 left-1/2 -translate-x-1/2">
               <span
-                class="text-xs font-semibold px-3 py-1 rounded-full tracking-wide uppercase"
-                style="background: var(--text); color: var(--bg-card);"
+                class="text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider"
+                style="background:var(--accent); color:#fff; letter-spacing:0.08em;"
               >
                 Empfohlen
               </span>
             </div>
           )}
-          <!-- Price badge -->
-          <div class="mb-4 inline-flex items-center self-start rounded-lg px-3 py-1.5" style="background: var(--bg-2); border: 1px solid var(--border);">
-            <span class="text-xs font-semibold" style="color: var(--text);">{s.price}</span>
+
+          <div class="mb-4 flex items-start justify-between">
+            <span style="color:var(--subtle); font-size:0.65rem; font-family:'JetBrains Mono',monospace;">{o.id}</span>
+            <span style="background:var(--bg-card-2); border:1px solid var(--border); color:var(--text); font-size:0.72rem; font-weight:600; padding:0.25rem 0.6rem; border-radius:6px;">
+              {o.price}
+            </span>
           </div>
 
-          <h3 class="text-base font-semibold" style="color: var(--text);">{s.name}</h3>
+          <h3 style="color:var(--text);" class="text-xl font-semibold mb-1">{o.name}</h3>
+          <p style="color:var(--subtle);" class="text-xs mb-4">{o.duration}</p>
+          <p style="color:var(--muted);" class="text-sm leading-relaxed flex-1">{o.description}</p>
 
-          <span class="mt-1 text-xs font-medium" style="color: var(--muted);">{s.duration}</span>
-
-          <p class="mt-4 flex-1 text-sm leading-relaxed" style="color: var(--muted);">{s.description}</p>
-
-          <div class="mt-5 flex items-start gap-2 text-xs" style="color: var(--subtle);">
-            <span>✓</span>
-            <span>{s.deliverable}</span>
+          <div class="mt-5 flex items-start gap-2 text-xs" style="color:var(--subtle); border-top:1px solid var(--border); padding-top:1rem;">
+            <span style="color:var(--green);">✓</span>
+            <span>{o.deliverable}</span>
           </div>
         </div>
       ))}
     </div>
 
-    <!-- CTA row -->
     <div class="mt-12 flex flex-wrap gap-4">
-      <MagneticButton text="Opportunity Scan anfragen" href="#contact" variant="primary" />
-      <MagneticButton text="Erstgespräch vereinbaren" href="#contact" variant="ghost-light" />
+      <a href="#contact" class="btn-primary">Projekt besprechen</a>
+      <a href="#contact" class="btn-ghost">Discovery Sprint anfragen</a>
     </div>
 
   </div>

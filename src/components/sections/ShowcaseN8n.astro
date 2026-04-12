@@ -1,0 +1,154 @@
+---
+// Showcase 2: n8n Automation
+---
+
+<section style="border-top: 1px solid var(--border);">
+  <div class="mx-auto max-w-6xl px-6 py-28">
+
+    <!-- Label -->
+    <div class="mb-5 flex items-center gap-3">
+      <span class="section-label">
+        <span style="color:var(--green);">02</span>
+        Automation
+      </span>
+    </div>
+
+    <!-- Headline -->
+    <div class="mb-16 grid gap-4 md:grid-cols-2 md:items-end">
+      <div>
+        <h2 style="color:var(--text); letter-spacing:-0.02em;" class="text-4xl font-semibold md:text-5xl">
+          44 Workflows.<br />
+          <span style="color:var(--muted);">Einer baut sie.</span>
+        </h2>
+      </div>
+      <div>
+        <p style="color:var(--muted);" class="text-base leading-relaxed md:max-w-sm md:ml-auto">
+          n8n als Orchestrierungsschicht — Telegram, Supabase, AI Models, APIs.
+          Jeder Workflow reproduzierbar, dokumentiert, monitored.
+        </p>
+      </div>
+    </div>
+
+    <!-- Workflow mockup -->
+    <div class="db-frame card-glow">
+      <div class="db-toolbar justify-between">
+        <div class="flex items-center gap-1.5">
+          <span class="db-dot" style="background:#ff5f57;"></span>
+          <span class="db-dot" style="background:#febc2e;"></span>
+          <span class="db-dot" style="background:#28c840;"></span>
+        </div>
+        <span style="color:var(--subtle); font-size:0.6rem; font-family:'JetBrains Mono',monospace; letter-spacing:0.05em;">
+          n8n.automation-plus-ki.de — 06_010 Content Pipeline
+        </span>
+        <span class="flex items-center gap-1.5">
+          <span class="live-dot"></span>
+          <span style="color:var(--muted); font-size:0.6rem; font-family:'JetBrains Mono',monospace;">active</span>
+        </span>
+      </div>
+
+      <div class="p-6 overflow-x-auto">
+        <!-- Workflow graph -->
+        <div class="relative min-w-[600px]" style="height:180px;">
+          <!-- Connection lines -->
+          <svg class="absolute inset-0 w-full h-full pointer-events-none">
+            <!-- Trigger → AI -->
+            <line x1="96" y1="90" x2="196" y2="90" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+            <line x1="96" y1="90" x2="196" y2="90" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.5"/>
+            <!-- AI → HTTP -->
+            <line x1="292" y1="90" x2="392" y2="90" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+            <line x1="292" y1="90" x2="392" y2="90" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.5"/>
+            <!-- HTTP → Supabase -->
+            <line x1="488" y1="90" x2="560" y2="60" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+            <line x1="488" y1="90" x2="560" y2="60" stroke="var(--green)" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.4"/>
+            <!-- HTTP → Telegram -->
+            <line x1="488" y1="90" x2="560" y2="130" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+            <line x1="488" y1="90" x2="560" y2="130" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.4"/>
+          </svg>
+
+          <!-- Nodes -->
+          {[
+            { x: 8,  y: 68, label: 'Schedule', sub: 'tägl. 09:30', color: 'var(--amber)', icon: '⏰' },
+            { x: 196, y: 68, label: 'AI Analyse', sub: 'GPT-4o', color: 'var(--accent)', icon: '🤖' },
+            { x: 392, y: 68, label: 'HTTP Post', sub: 'Supabase', color: 'var(--green)', icon: '⬆' },
+          ].map(({ x, y, label, sub, color, icon }) => (
+            <div
+              class="absolute flex flex-col items-center"
+              style={`left:${x}px; top:${y}px; width:88px;`}
+            >
+              <div
+                style={`
+                  border:1px solid ${color}44;
+                  background:var(--bg-card-2);
+                  border-radius:10px;
+                  padding:0.6rem 0.5rem;
+                  width:88px;
+                  box-shadow: 0 0 18px ${color}18;
+                `}
+                class="flex flex-col items-center gap-1"
+              >
+                <span style="font-size:1.1rem; line-height:1;">{icon}</span>
+                <span style={`color:${color}; font-size:0.62rem; font-weight:600; letter-spacing:0.04em;`}>{label}</span>
+                <span style="color:var(--subtle); font-size:0.55rem; font-family:'JetBrains Mono',monospace;">{sub}</span>
+              </div>
+            </div>
+          ))}
+
+          <!-- Output nodes (right side) -->
+          <div class="absolute flex flex-col gap-4" style="right:8px; top:28px;">
+            {[
+              { label: 'Supabase', sub: 'insert row', color: 'var(--green)' },
+              { label: 'Telegram', sub: 'notify', color: 'var(--accent)' },
+            ].map(({ label, sub, color }) => (
+              <div
+                style={`
+                  border:1px solid ${color}33;
+                  background:var(--bg-card-2);
+                  border-radius:8px;
+                  padding:0.4rem 0.6rem;
+                  width:80px;
+                  box-shadow: 0 0 12px ${color}10;
+                `}
+                class="flex flex-col items-center gap-0.5"
+              >
+                <span style={`color:${color}; font-size:0.6rem; font-weight:600;`}>{label}</span>
+                <span style="color:var(--subtle); font-size:0.52rem; font-family:'JetBrains Mono',monospace;">{sub}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Cluster pills -->
+        <div class="mt-4 flex flex-wrap gap-2">
+          <p style="color:var(--subtle); font-size:0.6rem; letter-spacing:0.1em;" class="w-full uppercase mb-1">Cluster</p>
+          {[
+            { name: 'DATA', count: 3, color: 'var(--green)' },
+            { name: 'CONTENT', count: 7, color: 'var(--accent)' },
+            { name: 'AI', count: 6, color: 'var(--accent)' },
+            { name: 'DEVOPS', count: 6, color: 'var(--amber)' },
+            { name: 'REPORT', count: 3, color: 'var(--muted)' },
+            { name: 'COMM', count: 3, color: 'var(--muted)' },
+            { name: 'ADMIN', count: 3, color: 'var(--muted)' },
+          ].map(({ name, count, color }) => (
+            <div
+              style={`border:1px solid ${color}33; border-radius:6px; padding:0.25rem 0.6rem; display:flex; align-items:center; gap:0.4rem;`}
+            >
+              <span style={`color:${color}; font-size:0.62rem; font-weight:600; font-family:'JetBrains Mono',monospace;`}>{name}</span>
+              <span style="color:var(--subtle); font-size:0.58rem; font-family:'JetBrains Mono',monospace;">{count}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-8 flex flex-wrap gap-3">
+      {['n8n Self-hosted', 'Telegram Interface', 'Supabase Logging', 'Error Monitoring', 'Cron + Webhooks'].map((f) => (
+        <span
+          style="border:1px solid var(--border); color:var(--muted); font-size:0.7rem; padding:0.35rem 0.75rem; border-radius:999px;"
+        >
+          {f}
+        </span>
+      ))}
+    </div>
+
+  </div>
+</section>

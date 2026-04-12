@@ -1,0 +1,144 @@
+---
+// Showcase 1: Analytics Dashboard
+---
+
+<section id="showcase" style="border-top: 1px solid var(--border);">
+  <div class="mx-auto max-w-6xl px-6 py-28">
+
+    <!-- Label -->
+    <div class="mb-5 flex items-center gap-3">
+      <span class="section-label">
+        <span style="color:var(--accent);">01</span>
+        Analytics
+      </span>
+    </div>
+
+    <!-- Headline -->
+    <div class="mb-16 grid gap-4 md:grid-cols-2 md:items-end">
+      <div>
+        <h2 style="color:var(--text); letter-spacing:-0.02em;" class="text-4xl font-semibold md:text-5xl">
+          Daten lesen.<br />
+          <span style="color:var(--muted);">Nicht raten.</span>
+        </h2>
+      </div>
+      <div>
+        <p style="color:var(--muted);" class="text-base leading-relaxed md:max-w-sm md:ml-auto">
+          Kein Grafana-Overhead. Eigene Dashboards auf Supabase-Basis —
+          schnell, lesbar, direkt an deine Prozesse gebunden.
+        </p>
+      </div>
+    </div>
+
+    <!-- Dashboard mockup -->
+    <div class="db-frame card-glow">
+      <!-- Toolbar -->
+      <div class="db-toolbar justify-between">
+        <div class="flex items-center gap-1.5">
+          <span class="db-dot" style="background:#ff5f57;"></span>
+          <span class="db-dot" style="background:#febc2e;"></span>
+          <span class="db-dot" style="background:#28c840;"></span>
+        </div>
+        <span style="color:var(--subtle); font-size:0.6rem; font-family:'JetBrains Mono',monospace; letter-spacing:0.05em;">
+          analytics.automation-plus-ki.de
+        </span>
+        <span class="flex items-center gap-1.5">
+          <span class="live-dot"></span>
+          <span style="color:var(--muted); font-size:0.6rem; font-family:'JetBrains Mono',monospace;">live</span>
+        </span>
+      </div>
+
+      <!-- Dashboard body -->
+      <div class="p-6">
+
+        <!-- Metric row -->
+        <div class="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          {[
+            { label: 'Workflows', value: '44', delta: '+2', pos: true },
+            { label: 'Runs heute', value: '312', delta: '+18%', pos: true },
+            { label: 'Fehler (7d)', value: '6', delta: '-40%', pos: true },
+            { label: 'Avg. Dauer', value: '1.4s', delta: '–0.2s', pos: true },
+          ].map(({ label, value, delta, pos }) => (
+            <div class="stat-card">
+              <p style="color:var(--subtle); font-size:0.6rem; letter-spacing:0.1em;" class="uppercase mb-1">{label}</p>
+              <p style="color:var(--text);" class="text-2xl font-semibold tracking-tight">{value}</p>
+              <p style={`color:${pos ? 'var(--green)' : 'var(--amber)'}; font-size:0.65rem; margin-top:2px;`}>{delta}</p>
+            </div>
+          ))}
+        </div>
+
+        <!-- Chart area -->
+        <div
+          class="mb-4 overflow-hidden rounded-lg"
+          style="border:1px solid var(--border); background:var(--bg-card-2); padding:1.25rem;"
+        >
+          <p style="color:var(--subtle); font-size:0.6rem; letter-spacing:0.1em;" class="uppercase mb-4">
+            Executions — letzte 14 Tage
+          </p>
+          <!-- SVG Bar chart -->
+          <svg viewBox="0 0 560 90" class="w-full" style="height:90px;">
+            {[28,40,35,52,44,61,48,70,55,66,72,59,80,78].map((h, i) => (
+              <rect
+                x={i * 40 + 4}
+                y={90 - h}
+                width="28"
+                height={h}
+                rx="3"
+                fill={i === 13 ? 'var(--accent)' : i > 9 ? 'rgba(124,111,255,0.45)' : 'rgba(255,255,255,0.06)'}
+              />
+            ))}
+            {/* Trend line */}
+            <polyline
+              points="18,62 58,50 98,55 138,38 178,46 218,29 258,42 298,20 338,35 378,24 418,18 458,31 498,10 538,12"
+              fill="none"
+              stroke="var(--accent)"
+              stroke-width="1.5"
+              stroke-opacity="0.6"
+              stroke-dasharray="4 2"
+            />
+          </svg>
+        </div>
+
+        <!-- Table preview -->
+        <div style="border:1px solid var(--border); border-radius:8px; overflow:hidden;">
+          <div style="background:var(--bg-card-2); padding: 0.6rem 1rem; border-bottom:1px solid var(--border);">
+            <p style="color:var(--subtle); font-size:0.6rem; letter-spacing:0.1em;" class="uppercase">Letzte Runs</p>
+          </div>
+          <div class="divide-y" style="--tw-divide-opacity:1; border-color:var(--border);">
+            {[
+              { name: '02_010 Daily Digest', status: 'success', dur: '1.2s', time: 'vor 2 min' },
+              { name: '06_010 Content Pipeline', status: 'success', dur: '4.8s', time: 'vor 8 min' },
+              { name: '16_010 Workflow Index', status: 'success', dur: '0.9s', time: 'vor 22 min' },
+              { name: '21_040 Telegram Assist', status: 'error', dur: '–', time: 'vor 1 Std' },
+            ].map(({ name, status, dur, time }) => (
+              <div class="flex items-center justify-between px-4 py-2.5">
+                <div class="flex items-center gap-2.5">
+                  <span
+                    style={`width:6px;height:6px;border-radius:50%;background:${status === 'success' ? 'var(--green)' : 'var(--amber)'};flex-shrink:0;`}
+                  ></span>
+                  <span style="color:var(--text); font-size:0.75rem;" class="font-mono">{name}</span>
+                </div>
+                <div class="flex items-center gap-6">
+                  <span style="color:var(--subtle); font-size:0.7rem;" class="font-mono hidden sm:inline">{dur}</span>
+                  <span style="color:var(--subtle); font-size:0.7rem;">{time}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Feature pills -->
+    <div class="mt-8 flex flex-wrap gap-3">
+      {['Supabase Backend', 'REST API', 'Echtzeit-Updates', 'Kein Vendor Lock-in', 'Self-hosted'].map((f) => (
+        <span
+          style="border:1px solid var(--border); color:var(--muted); font-size:0.7rem; padding:0.35rem 0.75rem; border-radius:999px;"
+        >
+          {f}
+        </span>
+      ))}
+    </div>
+
+  </div>
+</section>

@@ -1,38 +1,37 @@
 ---
 const navLinks = [
+  { href: '/#showcase', label: 'Services' },
   { href: '/projects', label: 'Projekte' },
   { href: '/about', label: 'Über mich' },
-  { href: '/contact', label: 'Kontakt' },
   { href: '/impressum', label: 'Impressum' },
   { href: '/datenschutz', label: 'Datenschutz' },
 ];
 ---
 
-<footer style="border-top: 1px solid var(--border); background: var(--bg-card);">
-  <div class="mx-auto max-w-5xl px-6 py-12">
-    <div class="grid gap-8 sm:grid-cols-3">
+<footer style="border-top: 1px solid var(--border); background: var(--bg-2);">
+  <div class="mx-auto max-w-6xl px-6 py-14">
+    <div class="grid gap-10 sm:grid-cols-3">
 
-      <!-- Col 1: Brand -->
+      <!-- Brand -->
       <div>
-        <p class="text-sm font-semibold mb-2" style="color: var(--text);">Timo Goetz</p>
-        <p class="text-xs leading-relaxed" style="color: var(--subtle);">
-          Weniger Verderb.<br />
-          Bessere Auslastung.<br />
-          Mehr Marge.
+        <div class="flex items-center gap-3 mb-4">
+          <span
+            style="border:1px solid var(--border-2); color:var(--accent); background:var(--bg-card); font-family:'JetBrains Mono',monospace; width:32px; height:32px; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:0.7rem; font-weight:500;"
+          >TG</span>
+          <span style="color:var(--text); font-size:0.75rem; font-weight:600; letter-spacing:0.06em;" class="uppercase">Timo Goetz</span>
+        </div>
+        <p style="color:var(--subtle);" class="text-xs leading-relaxed">
+          KI-Infrastruktur · Automation · DACH
         </p>
       </div>
 
-      <!-- Col 2: Navigation -->
+      <!-- Navigation -->
       <nav>
-        <p class="text-xs font-medium uppercase tracking-widest mb-3" style="color: var(--muted);">Navigation</p>
-        <ul class="flex flex-col gap-2">
+        <p style="color:var(--subtle); font-size:0.6rem; letter-spacing:0.12em;" class="uppercase mb-4">Navigation</p>
+        <ul class="flex flex-col gap-2.5">
           {navLinks.map(({ href, label }) => (
             <li>
-              <a
-                href={href}
-                style="color: var(--subtle);"
-                class="text-xs hover:text-[var(--text)] transition-colors"
-              >
+              <a href={href} style="color:var(--subtle);" class="text-xs hover:text-[var(--text)] transition-colors">
                 {label}
               </a>
             </li>
@@ -40,34 +39,27 @@ const navLinks = [
         </ul>
       </nav>
 
-      <!-- Col 3: Contact -->
+      <!-- Contact -->
       <div>
-        <p class="text-xs font-medium uppercase tracking-widest mb-3" style="color: var(--muted);">Kontakt</p>
-        <a
-          href="mailto:timo@timo-goetz-ai.de"
-          class="block text-xs mb-2 hover:text-[var(--text)] transition-colors"
-          style="color: var(--subtle);"
-        >
+        <p style="color:var(--subtle); font-size:0.6rem; letter-spacing:0.12em;" class="uppercase mb-4">Kontakt</p>
+        <a href="mailto:timo@timo-goetz-ai.de" class="block text-xs mb-3 hover:text-[var(--text)] transition-colors" style="color:var(--subtle);">
           timo@timo-goetz-ai.de
         </a>
-        <a
-          href="https://www.linkedin.com/in/timo-goetz"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="text-xs hover:text-[var(--text)] transition-colors"
-          style="color: var(--subtle);"
-        >
-          LinkedIn
+        <a href="https://github.com/timogoetz1988" target="_blank" rel="noopener noreferrer" class="text-xs hover:text-[var(--text)] transition-colors" style="color:var(--subtle);">
+          GitHub →
         </a>
       </div>
 
     </div>
 
-    <!-- Bottom bar -->
-    <div class="mt-10 pt-6 flex items-center justify-between flex-wrap gap-4" style="border-top: 1px solid var(--border);">
-      <p style="color: var(--subtle);" class="text-xs">
-        &copy; {new Date().getFullYear()} Timo Goetz — Forecasting-Spezialist · Perishable Operations · DACH
+    <div class="mt-10 pt-6 flex items-center justify-between flex-wrap gap-3" style="border-top:1px solid var(--border);">
+      <p style="color:var(--subtle);" class="text-xs">
+        &copy; {new Date().getFullYear()} Timo Goetz
       </p>
+      <div class="flex items-center gap-1.5">
+        <span class="live-dot"></span>
+        <span style="color:var(--subtle); font-size:0.6rem; font-family:'JetBrains Mono',monospace;">All systems operational</span>
+      </div>
     </div>
   </div>
 </footer>

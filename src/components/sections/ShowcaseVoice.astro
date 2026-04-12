@@ -1,0 +1,214 @@
+---
+// Showcase 3: AI Voice Room
+---
+
+<section style="border-top: 1px solid var(--border);">
+  <div class="mx-auto max-w-6xl px-6 py-28">
+
+    <!-- Label -->
+    <div class="mb-5 flex items-center gap-3">
+      <span class="section-label">
+        <span style="color:var(--amber);">03</span>
+        Voice Room
+      </span>
+    </div>
+
+    <!-- Headline -->
+    <div class="mb-16 grid gap-4 md:grid-cols-2 md:items-end">
+      <div>
+        <h2 style="color:var(--text); letter-spacing:-0.02em;" class="text-4xl font-semibold md:text-5xl">
+          Sprechen.<br />
+          <span style="color:var(--muted);">KI antwortet.</span>
+        </h2>
+      </div>
+      <div>
+        <p style="color:var(--muted);" class="text-base leading-relaxed md:max-w-sm md:ml-auto">
+          Vollständige Voice-Platform — STT, LLM, TTS in einem Stack.
+          Eigene Stimme, eigene Prompts, eigener Server. Kein SaaS.
+        </p>
+      </div>
+    </div>
+
+    <!-- Voice Room mockup -->
+    <div class="db-frame card-glow">
+      <div class="db-toolbar justify-between">
+        <div class="flex items-center gap-1.5">
+          <span class="db-dot" style="background:#ff5f57;"></span>
+          <span class="db-dot" style="background:#febc2e;"></span>
+          <span class="db-dot" style="background:#28c840;"></span>
+        </div>
+        <span style="color:var(--subtle); font-size:0.6rem; font-family:'JetBrains Mono',monospace; letter-spacing:0.05em;">
+          voice.automation-plus-ki.de
+        </span>
+        <span class="flex items-center gap-1.5">
+          <span class="live-dot"></span>
+          <span style="color:var(--muted); font-size:0.6rem; font-family:'JetBrains Mono',monospace;">online</span>
+        </span>
+      </div>
+
+      <div class="p-6">
+        <div class="grid gap-6 lg:grid-cols-[1fr_300px]">
+
+          <!-- Chat column -->
+          <div class="flex flex-col gap-3">
+
+            <!-- Messages -->
+            <div class="flex flex-col gap-3">
+              <!-- User message -->
+              <div class="flex justify-end">
+                <div
+                  style="background:var(--accent); border-radius:12px 12px 3px 12px; padding:0.6rem 1rem; max-width:75%;"
+                >
+                  <p style="color:#fff; font-size:0.8rem; line-height:1.5;">
+                    Kannst du mir die heutigen Workflow-Fehler zusammenfassen?
+                  </p>
+                </div>
+              </div>
+
+              <!-- AI message -->
+              <div class="flex items-start gap-2.5">
+                <div
+                  style="
+                    width:28px; height:28px; border-radius:50%; flex-shrink:0;
+                    background:var(--bg-card-2); border:1px solid var(--border-2);
+                    display:flex; align-items:center; justify-content:center;
+                    font-size:0.65rem; color:var(--amber); font-weight:700;
+                  "
+                >
+                  AI
+                </div>
+                <div
+                  style="background:var(--bg-card-2); border:1px solid var(--border); border-radius:3px 12px 12px 12px; padding:0.6rem 1rem; max-width:85%;"
+                >
+                  <p style="color:var(--text); font-size:0.8rem; line-height:1.6;">
+                    Heute gab es <strong>2 Fehler</strong>: Telegram Assistant (connection timeout)
+                    und GDrive Sync (OAuth abgelaufen). Beide sind nicht kritisch — der Digest läuft, alle 44 Workflows sind aktiv.
+                  </p>
+                </div>
+              </div>
+
+              <!-- User -->
+              <div class="flex justify-end">
+                <div
+                  style="background:var(--accent); border-radius:12px 12px 3px 12px; padding:0.6rem 1rem; max-width:60%;"
+                >
+                  <p style="color:#fff; font-size:0.8rem; line-height:1.5;">
+                    Wie lange läuft der Content-Workflow im Schnitt?
+                  </p>
+                </div>
+              </div>
+
+              <!-- AI typing -->
+              <div class="flex items-start gap-2.5">
+                <div
+                  style="
+                    width:28px; height:28px; border-radius:50%; flex-shrink:0;
+                    background:var(--bg-card-2); border:1px solid var(--border-2);
+                    display:flex; align-items:center; justify-content:center;
+                    font-size:0.65rem; color:var(--amber); font-weight:700;
+                  "
+                >
+                  AI
+                </div>
+                <div
+                  style="background:var(--bg-card-2); border:1px solid var(--border); border-radius:3px 12px 12px 12px; padding:0.7rem 1rem;"
+                >
+                  <p style="color:var(--text); font-size:0.8rem; line-height:1.6;">
+                    Durchschnittlich <strong style="color:var(--green);">4.8 Sekunden</strong> über die letzten 30 Runs.
+                    Peak war 8.2s — das war der OpenRouter-Timeout am 10.04.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Input bar -->
+            <div
+              style="
+                border:1px solid var(--border-2); border-radius:10px;
+                background:var(--bg-card-2); padding:0.75rem 1rem;
+                display:flex; align-items:center; gap:0.75rem; margin-top:0.5rem;
+              "
+            >
+              <!-- Waveform -->
+              <div class="flex items-center gap-0.5" style="height:24px;">
+                {[0.3,0.6,1,0.8,0.5,0.9,0.7,0.4,0.8,1,0.6,0.3].map((h, i) => (
+                  <div
+                    style={`
+                      width:3px;
+                      border-radius:2px;
+                      background:var(--amber);
+                      height:${Math.round(h * 24)}px;
+                      animation: wave ${0.9 + (i % 4) * 0.15}s ease-in-out infinite;
+                      animation-delay: ${i * 0.07}s;
+                    `}
+                  ></div>
+                ))}
+              </div>
+              <p style="color:var(--subtle); font-size:0.75rem; flex:1; font-family:'JetBrains Mono',monospace;">
+                Sprechen …
+              </p>
+              <div class="flex items-center gap-1.5">
+                <span class="live-dot"></span>
+                <span style="color:var(--amber); font-size:0.6rem; font-family:'JetBrains Mono',monospace; letter-spacing:0.06em;">REC</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stats column -->
+          <div class="flex flex-col gap-3">
+            <div class="stat-card">
+              <p style="color:var(--subtle); font-size:0.6rem; letter-spacing:0.1em;" class="uppercase mb-2">Stack</p>
+              <div class="space-y-2">
+                {[
+                  { key: 'STT', val: 'Whisper / Deepgram' },
+                  { key: 'LLM', val: 'GPT-4o' },
+                  { key: 'TTS', val: 'FishAudio v2' },
+                  { key: 'RT',  val: 'WebSocket' },
+                ].map(({ key, val }) => (
+                  <div class="flex items-center justify-between">
+                    <span style="color:var(--subtle); font-size:0.65rem; font-family:'JetBrains Mono',monospace;">{key}</span>
+                    <span style="color:var(--text); font-size:0.65rem;">{val}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <p style="color:var(--subtle); font-size:0.6rem; letter-spacing:0.1em;" class="uppercase mb-2">Latenz</p>
+              <p style="color:var(--green);" class="text-2xl font-semibold tracking-tight">~820 ms</p>
+              <p style="color:var(--subtle); font-size:0.65rem; margin-top:2px;">Wort bis Antwort-Start</p>
+            </div>
+
+            <div class="stat-card">
+              <p style="color:var(--subtle); font-size:0.6rem; letter-spacing:0.1em;" class="uppercase mb-3">Features</p>
+              <div class="space-y-1.5">
+                {[
+                  'Custom Voice Clone',
+                  'Eigene Persona',
+                  'Streaming Audio',
+                  'Kein SaaS Vendor',
+                ].map((f) => (
+                  <div class="flex items-center gap-2">
+                    <span style="color:var(--green); font-size:0.7rem;">✓</span>
+                    <span style="color:var(--muted); font-size:0.7rem;">{f}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-8 flex flex-wrap gap-3">
+      {['Self-hosted', 'Custom Voice', 'Echtzeit STT/TTS', 'WebSocket', 'OpenAI / Deepgram'].map((f) => (
+        <span
+          style="border:1px solid var(--border); color:var(--muted); font-size:0.7rem; padding:0.35rem 0.75rem; border-radius:999px;"
+        >
+          {f}
+        </span>
+      ))}
+    </div>
+
+  </div>
+</section>
