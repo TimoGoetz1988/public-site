@@ -1,106 +1,70 @@
 ---
-import MagneticButton from '@/components/ui/MagneticButton.astro';
-import MagneticCard from '@/components/ui/MagneticCard.astro';
-import AnimatedBackground from '@/components/ui/AnimatedBackground.astro';
+import MagneticButton from '../ui/MagneticButton.astro';
 ---
 
-<section class="min-h-screen flex items-center relative overflow-hidden bg-[var(--bg)]">
-  <div
-    class="absolute inset-0"
-    style="background-image: radial-gradient(rgba(15,23,42,0.06) 1px, transparent 1px); background-size: 32px 32px;"
-  ></div>
-  <AnimatedBackground variant="dark" />
+<section class="relative flex min-h-screen items-center overflow-hidden bg-[var(--bg)]">
+  <div class="mx-auto w-full max-w-6xl px-6 pb-20 pt-28">
+    <div class="grid items-start gap-16 lg:grid-cols-[minmax(0,1.15fr)_420px]">
+      <div class="max-w-3xl">
+        <p style="color: var(--muted); letter-spacing: 0.14em;" class="mb-8 text-xs font-medium uppercase">
+          Forecasting-Spezialist · Perishable Operations · DACH
+        </p>
 
-  <div class="mx-auto max-w-5xl px-6 w-full pt-24 pb-20 relative z-10">
-    <div class="grid md:grid-cols-5 gap-16 items-center">
+        <h1 style="color: var(--text); line-height: 1.02;" class="mb-8 text-5xl font-semibold tracking-tight md:text-6xl">
+          Weniger Verderb.<br />
+          Bessere Auslastung.<br />
+          Mehr Marge.
+        </h1>
 
-      <div class="md:col-span-3">
-        <div class="flex items-center gap-3 mb-10">
-          <span style="background: var(--accent-2); width: 8px; height: 8px;" class="rounded-full inline-block animate-pulse"></span>
-          <p style="color: var(--accent); letter-spacing: 0.12em;" class="text-xs uppercase font-medium">
-            System Online
-          </p>
-          <span style="color: var(--subtle);" class="text-xs">|</span>
-          <p style="color: var(--muted); letter-spacing: 0.12em;" class="text-xs uppercase">
-            KI-Beauftragter &middot; DEKRA zertifiziert
+        <p style="color: var(--muted);" class="mb-8 max-w-xl text-lg leading-relaxed">
+          ML-Prognose-Systeme für Fresh-Food-Retail,
+          Lebensmittelautomaten und Gastronomie.
+        </p>
+
+        <!-- Case Study Pill -->
+        <div
+          class="mb-10 inline-block rounded-lg px-4 py-3 text-sm"
+          style="border: 1px solid var(--border); background: var(--bg-card);"
+        >
+          <span class="font-mono text-xs uppercase tracking-widest" style="color: var(--subtle);">Case Study</span>
+          <p class="mt-1 text-sm" style="color: var(--text);">
+            DACH-Betreiber · Verderb −XX% · ROI in Y Monaten
+            {/* [PLACEHOLDER] Echte KPIs eintragen nach Kunden-Freigabe */}
           </p>
         </div>
 
-        <h1
-          style="color: var(--text); line-height: 1.08;"
-          class="text-5xl md:text-7xl font-semibold tracking-tight mb-8"
-        >
-          KI-Beauftragter<br />
-          mit Fuehrungs-<br />
-          <span style="color: var(--accent-2);">erfahrung.</span>
-        </h1>
-
-        <p style="color: var(--muted);" class="text-lg leading-relaxed max-w-lg mb-10">
-          Ich baue Automatisierungen, die funktionieren &mdash;
-          weil ich die Prozesse dahinter kenne.
-        </p>
-
         <div class="flex flex-wrap items-center gap-4">
-          <MagneticButton href="/projects" text="Projekte ansehen →" variant="primary" />
-          <MagneticButton href="/about" text="Über mich" variant="ghost" />
+          <MagneticButton text="Opportunity Scan — 2.500 €" href="#services" variant="primary" />
+          <MagneticButton text="Kostenloses 30-Min Discovery" href="#contact" variant="ghost-light" />
         </div>
       </div>
 
-      <div class="hidden md:block md:col-span-2 space-y-5">
-        <div class="rounded-xl overflow-hidden border border-[var(--border)] shadow-sm bg-[var(--bg-2)]">
+      <div class="space-y-4">
+        <div class="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--bg-card)]">
           <img
-            src="/timo-goetz.png"
-            alt="Timo Goetz"
-            width="440"
+            src="/hero-bg.jpg"
+            alt="Frische Lebensmittel — Food Still Life"
+            width="420"
             height="520"
-            class="w-full h-auto object-cover object-top"
+            class="h-auto w-full object-cover"
             loading="eager"
           />
         </div>
-        <div style="background: var(--bg-card); border: 1px solid var(--border);" class="rounded-xl p-6 shadow-sm">
-          <p style="color: var(--accent); letter-spacing: 0.1em;" class="text-xs uppercase font-semibold mb-5">Stack &amp; Skills</p>
 
-          <div class="space-y-3">
-            {[
-              { label: 'Python & TypeScript', status: 'active' },
-              { label: 'n8n Workflows', status: 'active' },
-              { label: 'MCP Server', status: 'active' },
-              { label: 'Coolify / Hetzner', status: 'active' },
-              { label: 'Prompt Engineering', status: 'active' },
-            ].map(({ label, status }) => (
-              <div class="flex items-center justify-between">
-                <span style="color: var(--text);" class="text-sm">{label}</span>
-                <div class="flex items-center gap-2">
-                  <span style="background: var(--success); width: 6px; height: 6px;" class="rounded-full inline-block"></span>
-                  <span style="color: var(--success);" class="text-xs font-mono">{status}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div style="border-top: 1px solid var(--border);" class="mt-5 pt-5">
-            <div class="flex items-center justify-between">
-              <span style="color: var(--subtle);" class="text-xs">Abschluss</span>
-              <span style="color: var(--accent-2);" class="text-sm font-semibold font-mono">1,0</span>
+        <div class="grid grid-cols-2 gap-3">
+          {[
+            { label: 'Vertikal', value: '7' },
+            { label: 'Früheste Phase', value: 'Scan' },
+            { label: 'DACH', value: '✓' },
+            { label: 'DEKRA', value: 'Zert.' },
+          ].map(({ label, value }) => (
+            <div class="rounded-xl border border-[var(--border)] bg-[var(--bg-card)] px-4 py-4">
+              <p style="color: var(--text);" class="text-xl font-semibold">{value}</p>
+              <p style="color: var(--subtle);" class="mt-1 text-xs uppercase tracking-[0.08em]">{label}</p>
             </div>
-          </div>
+          ))}
         </div>
       </div>
-
-    </div>
-
-    <div style="border-top: 1px solid var(--border);" class="flex flex-wrap gap-4 mt-20 pt-8">
-      {[
-        { label: 'Projekte',   value: '5+',  variant: 'dark' as const },
-        { label: 'MCP Server', value: '15',  variant: 'dark' as const },
-        { label: 'Workflows',  value: '20+', variant: 'dark' as const },
-        { label: 'Uptime',     value: '47d', variant: 'dark' as const },
-      ].map(({ label, value, variant }) => (
-        <MagneticCard {variant} class="px-6 py-4 text-center min-w-[90px]">
-          <p style="color: var(--accent-2);" class="text-2xl font-semibold font-mono">{value}</p>
-          <p style="color: var(--subtle);" class="text-xs mt-1">{label}</p>
-        </MagneticCard>
-      ))}
     </div>
   </div>
 </section>

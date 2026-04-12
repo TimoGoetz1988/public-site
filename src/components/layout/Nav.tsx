@@ -18,8 +18,8 @@ export default function Nav() {
 
   return (
     <header
-      style={{ borderBottom: '1px solid var(--border)', background: 'rgba(255,255,255,0.92)' }}
-      className="fixed inset-x-0 top-0 z-50 backdrop-blur-md"
+      style={{ borderBottom: '1px solid var(--border)', background: 'rgba(250, 250, 248, 0.94)' }}
+      className="fixed inset-x-0 top-0 z-50 backdrop-blur-sm"
     >
       <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
 
@@ -29,13 +29,13 @@ export default function Nav() {
           className="flex items-center gap-3 hover:opacity-70 transition-opacity"
         >
           <span
-            style={{ background: 'var(--accent)', color: '#ffffff' }}
-            className="w-7 h-7 rounded flex items-center justify-center text-xs font-bold"
+            style={{ border: '1px solid var(--border)', color: 'var(--text)', background: 'var(--bg-card)' }}
+            className="flex h-8 w-8 items-center justify-center rounded text-xs font-semibold"
           >
             TG
           </span>
           <span style={{ color: 'var(--text)', letterSpacing: '0.08em' }} className="text-xs font-semibold uppercase">
-            Timo Goetz
+            Timo Götz
           </span>
         </a>
 
@@ -45,7 +45,7 @@ export default function Nav() {
               <a
                 href={href}
                 style={{
-                  color: pathname === href || pathname.startsWith(href + '/') ? 'var(--accent-2)' : 'var(--muted)',
+                  color: pathname === href || pathname.startsWith(href + '/') ? 'var(--text)' : 'var(--muted)',
                 }}
                 className="text-sm transition-colors hover:text-[var(--text)]"
               >
@@ -57,8 +57,8 @@ export default function Nav() {
 
         <a
           href="/contact"
-          style={{ background: 'var(--accent)', color: '#ffffff' }}
-          className="hidden md:inline-flex text-xs font-semibold px-4 py-2 rounded hover:opacity-90 transition-opacity tracking-wide"
+          style={{ border: '1px solid var(--border)', color: 'var(--text)', background: 'var(--bg-card)' }}
+          className="hidden md:inline-flex rounded px-4 py-2 text-xs font-semibold tracking-wide transition-colors hover:bg-[var(--bg)]"
         >
           Kontakt
         </a>
@@ -83,7 +83,7 @@ export default function Nav() {
               key={href}
               href={href}
               onClick={() => setOpen(false)}
-              style={{ color: pathname === href ? 'var(--accent-2)' : 'var(--muted)' }}
+              style={{ color: pathname === href ? 'var(--text)' : 'var(--muted)' }}
               className="text-sm"
             >
               {label}

@@ -1,43 +1,60 @@
 ---
 const timeline = [
-  { year: '2005–2023', label: 'Führungserfahrung', desc: 'Aldi Süd, Außendienst — Teamführung, Prozesse, Ergebnisverantwortung.' },
-  { year: '2024',      label: 'Pivot zu KI',       desc: 'WBS-Abschluss 1,0. DEKRA-Zertifizierung als KI-Beauftragter.' },
-  { year: '2025',      label: 'AIOS',               desc: 'Eigenes KI-Betriebssystem gebaut: n8n, Directus, MCP-Server, Automatisierungen.' },
-  { year: 'Heute',     label: 'Portfolio',           desc: 'Projekte, die echte Marktlücken schließen — dokumentiert, live, messbar.' },
+  { year: '2005–2023', label: 'Führungserfahrung', desc: 'Aldi Süd, Außendienst — Teamführung, Prozesse, P&L-Verantwortung im Lebensmitteleinzelhandel.' },
+  { year: '2024',      label: 'DEKRA-Zertifizierung', desc: 'WBS-Abschluss 1,0. Zertifiziert als KI-Beauftragter durch DEKRA.' },
+  { year: '2025',      label: 'Erstes Prognose-Deployment', desc: 'ML-Forecasting-System für Lebensmittelautomaten — Verderbreduktion messbar.' },
+  { year: 'Heute',     label: 'Spezialisierung', desc: 'Fokus auf perishable Operations: Prognose, Bestell-Optimierung, Bestandssteuerung.' },
 ];
 ---
 
-<section id="about" style="border-top: 1px solid var(--border); background: var(--bg-2);">
+<section id="about" style="border-top: 1px solid var(--border); background: var(--bg-card);">
   <div class="mx-auto max-w-5xl px-6 py-24">
 
-    <div class="flex items-center gap-4 mb-16">
-      <div style="background: var(--accent);" class="w-8 h-px shrink-0"></div>
+    <div class="mb-16 flex items-center gap-4">
+      <div style="background: var(--border-2);" class="h-px w-8 shrink-0"></div>
       <p style="color: var(--muted); letter-spacing: 0.12em;" class="text-xs uppercase">Über mich</p>
     </div>
 
-    <div class="grid md:grid-cols-2 gap-16 items-start">
+    <div class="grid items-start gap-16 md:grid-cols-2">
 
       <div>
         <h2
           style="color: var(--text);"
-          class="text-4xl font-semibold tracking-tight mb-8"
+          class="mb-8 text-4xl font-semibold tracking-tight"
         >
-          Vom Prozess-<br />
-          <span style="color: var(--muted);">kenner zum KI-Bauer.</span>
+          Warum ich —<br />
+          <span style="color: var(--muted);">nicht eine Agentur.</span>
         </h2>
-        <p style="color: var(--muted);" class="text-base leading-relaxed mb-6">
-          Ich kenne Unternehmen von innen — nicht aus dem Consulting-Handbuch, sondern aus Jahren operativer Führungsverantwortung.
+        <p style="color: var(--muted);" class="mb-6 text-base leading-relaxed">
+          18 Jahre operative Führungsverantwortung im Lebensmitteleinzelhandel. Ich kenne den Verderb nicht aus der Theorie, sondern aus der MHD-Prüfung im Kühlregal.
         </p>
         <p style="color: var(--muted);" class="text-base leading-relaxed">
-          Das macht den Unterschied: Ich automatisiere Prozesse, die ich selbst gelebt habe. Keine Luftschlösser — sondern Lösungen, die in der Realität funktionieren.
+          Diese Bodenhaftung macht den Unterschied: Meine Modelle optimieren Prozesse, die ich selbst gelebt habe.
         </p>
+
+        <!-- DEKRA Badge -->
+        <div
+          class="mt-8 inline-flex items-center gap-3 rounded-xl px-5 py-4"
+          style="border: 1px solid var(--border); background: var(--bg);"
+        >
+          <div
+            class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg"
+            style="background: var(--bg-2); border: 1px solid var(--border);"
+          >
+            <span class="text-xs font-bold tracking-tight" style="color: var(--text);">DEK</span>
+          </div>
+          <div>
+            <p class="text-sm font-semibold" style="color: var(--text);">DEKRA-zertifiziert</p>
+            <p class="text-xs" style="color: var(--muted);">KI-Beauftragter · geprüfte Fachkompetenz</p>
+          </div>
+        </div>
       </div>
 
       <div class="flex flex-col gap-8">
         {timeline.map(({ year, label, desc }) => (
           <div style="border-left: 1px solid var(--border);" class="pl-6">
-            <p style="color: var(--subtle);" class="text-xs mb-1">{year}</p>
-            <p style="color: var(--text);" class="text-sm font-semibold mb-2">{label}</p>
+            <p style="color: var(--subtle);" class="mb-1 text-xs">{year}</p>
+            <p style="color: var(--text);" class="mb-2 text-sm font-semibold">{label}</p>
             <p style="color: var(--muted);" class="text-sm leading-relaxed">{desc}</p>
           </div>
         ))}

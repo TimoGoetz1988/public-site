@@ -1,0 +1,82 @@
+---
+import MagneticButton from '../ui/MagneticButton.astro';
+
+const services = [
+  {
+    name: 'Opportunity Scan',
+    duration: '2 Tage',
+    price: 'ab 2.500 €',
+    description:
+      'Wir analysieren deine Daten-Situation und quantifizieren das Einsparpotential. Output: klarer Befund + Handlungsempfehlung.',
+    deliverable: 'Befund-Dokument + Handlungsempfehlung',
+    highlight: false,
+  },
+  {
+    name: 'Pilot-Forecast',
+    duration: '6–8 Wochen',
+    price: 'ab 25.000 €',
+    description:
+      'Vollständiges ML-Prognose-Modell für einen Standort oder eine Warengruppe. Inklusive Integration und KPI-Tracking.',
+    deliverable: 'Produktives Modell + Monitoring',
+    highlight: true,
+  },
+  {
+    name: 'Scale + Betrieb',
+    duration: 'Retainer',
+    price: 'ab 4.000 €/Monat',
+    description:
+      'Ausrollung auf alle Standorte, laufendes Modell-Tuning, Reporting und Weiterentwicklung.',
+    deliverable: 'SLA + monatliches Reporting',
+    highlight: false,
+  },
+];
+---
+
+<section id="services" style="border-top: 1px solid var(--border); background: var(--bg);">
+  <div class="mx-auto max-w-5xl px-6 py-24">
+
+    <!-- Section label -->
+    <div class="mb-12 flex items-center gap-3">
+      <div class="h-px w-8" style="background: var(--border-2);"></div>
+      <span class="text-xs font-medium uppercase tracking-widest" style="color: var(--muted);">Angebote</span>
+    </div>
+
+    <!-- Headline -->
+    <h2 class="text-3xl font-semibold tracking-tight md:text-4xl" style="color: var(--text);">
+      Drei Wege zur Zusammenarbeit.
+    </h2>
+
+    <!-- Cards grid -->
+    <div class="mt-12 grid gap-6 md:grid-cols-3">
+      {services.map((s) => (
+        <div
+          class={`flex flex-col rounded-xl px-6 py-6 ${s.highlight ? 'ring-1' : ''}`}
+          style={`border: 1px solid var(--border); background: var(--bg-card); ${s.highlight ? 'ring-color: var(--text);' : ''}`}
+        >
+          <!-- Price badge -->
+          <div class="mb-4 inline-flex items-center self-start rounded-lg px-3 py-1.5" style="background: var(--bg-2); border: 1px solid var(--border);">
+            <span class="text-xs font-semibold" style="color: var(--text);">{s.price}</span>
+          </div>
+
+          <h3 class="text-base font-semibold" style="color: var(--text);">{s.name}</h3>
+
+          <span class="mt-1 text-xs font-medium" style="color: var(--muted);">{s.duration}</span>
+
+          <p class="mt-4 flex-1 text-sm leading-relaxed" style="color: var(--muted);">{s.description}</p>
+
+          <div class="mt-5 flex items-start gap-2 text-xs" style="color: var(--subtle);">
+            <span>✓</span>
+            <span>{s.deliverable}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- CTA row -->
+    <div class="mt-12 flex flex-wrap gap-4">
+      <MagneticButton text="Opportunity Scan anfragen" href="#contact" variant="primary" />
+      <MagneticButton text="Erstgespräch vereinbaren" href="#contact" variant="ghost-light" />
+    </div>
+
+  </div>
+</section>

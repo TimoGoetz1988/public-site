@@ -15,11 +15,11 @@ function toEmbedUrl(viewformUrl: string): string {
 const embedSrc = rawFormUrl && rawFormUrl.length > 0 ? toEmbedUrl(rawFormUrl) : null;
 ---
 
-<section id="contact" style="background: var(--bg-2); border-top: 1px solid var(--border);">
+<section id="contact" style="background: var(--bg); border-top: 1px solid var(--border);">
   <div class="mx-auto max-w-5xl px-6 py-24">
 
-    <div class="flex items-center gap-4 mb-16">
-      <div style="background: var(--accent);" class="w-8 h-px shrink-0"></div>
+    <div class="mb-16 flex items-center gap-4">
+      <div style="background: var(--border-2);" class="h-px w-8 shrink-0"></div>
       <p style="color: var(--muted); letter-spacing: 0.12em;" class="text-xs uppercase">Kontakt</p>
     </div>
 
@@ -72,7 +72,7 @@ const embedSrc = rawFormUrl && rawFormUrl.length > 0 ? toEmbedUrl(rawFormUrl) : 
           href="https://docs.google.com/forms/"
           target="_blank"
           rel="noopener noreferrer"
-          style="color: var(--accent-2);"
+          style="color: var(--text);"
           class="text-sm hover:underline underline-offset-2"
         >
           Google Forms öffnen →
@@ -85,8 +85,8 @@ const embedSrc = rawFormUrl && rawFormUrl.length > 0 ? toEmbedUrl(rawFormUrl) : 
         <p style="color: var(--subtle);" class="text-xs uppercase tracking-wide">Direkt</p>
         <a
           href="mailto:timo@timo-goetz-ai.de"
-          style="background: var(--accent); color: #ffffff;"
-          class="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium rounded-lg hover:opacity-90 transition-opacity w-fit shadow-sm"
+          style="background: var(--text); color: var(--bg-card);"
+          class="inline-flex w-fit items-center gap-2 rounded px-6 py-3 text-sm font-medium transition-opacity hover:opacity-90"
         >
           E-Mail schreiben
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -97,7 +97,7 @@ const embedSrc = rawFormUrl && rawFormUrl.length > 0 ? toEmbedUrl(rawFormUrl) : 
           href="https://github.com/TimoGoetz1988"
           target="_blank"
           rel="noopener noreferrer"
-          style="color: var(--accent-2); border-bottom: 1px solid var(--border-2);"
+          style="color: var(--text); border-bottom: 1px solid var(--border-2);"
           class="text-sm pb-0.5 hover:opacity-80 transition-opacity w-fit"
         >
           GitHub ansehen

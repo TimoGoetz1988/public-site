@@ -1,0 +1,61 @@
+---
+const verticals = [
+  { label: 'Lebensmittelautomaten', status: 'done', icon: '🏪' },
+  { label: 'Bäckereien / Backshops', status: 'available', icon: '🥐' },
+  { label: 'Gastronomie', status: 'available', icon: '🍽️' },
+  { label: 'Frischetheken (LEH)', status: 'available', icon: '🥬' },
+  { label: 'Ghost Kitchens / Delivery', status: 'available', icon: '📦' },
+  { label: 'Floristik / Pflanzen', status: 'available', icon: '🌿' },
+  { label: 'Catering / Mensen', status: 'available', icon: '🍱' },
+];
+---
+
+<section id="verticals" style="border-top: 1px solid var(--border); background: var(--bg-card);">
+  <div class="mx-auto max-w-5xl px-6 py-24">
+
+    <!-- Section label -->
+    <div class="mb-12 flex items-center gap-3">
+      <div class="h-px w-8" style="background: var(--border-2);"></div>
+      <span class="text-xs font-medium uppercase tracking-widest" style="color: var(--muted);">Branchen</span>
+    </div>
+
+    <!-- Headline -->
+    <h2 class="text-3xl font-semibold tracking-tight md:text-4xl" style="color: var(--text);">
+      Wo Prognose Marge schafft.
+    </h2>
+
+    <!-- Verticals grid -->
+    <div class="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      {verticals.map((v) => (
+        <div
+          class="flex items-start gap-4 rounded-xl px-5 py-5"
+          style="border: 1px solid var(--border); background: var(--bg);"
+        >
+          <span class="mt-0.5 text-2xl" aria-hidden="true">{v.icon}</span>
+          <div>
+            <p class="text-sm font-semibold" style="color: var(--text);">{v.label}</p>
+            {v.status === 'done' && (
+              <span
+                class="mt-1.5 inline-block rounded px-2 py-0.5 text-xs font-medium"
+                style="color: var(--fresh); background: var(--fresh-dim);"
+              >
+                Referenz verfügbar
+              </span>
+            )}
+            {v.status === 'available' && (
+              <span class="mt-1.5 block text-xs" style="color: var(--subtle);">
+                Anfragen willkommen
+              </span>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Footer note -->
+    <p class="mt-8 text-xs" style="color: var(--subtle);">
+      Jede Branche folgt derselben Logik: Abverkaufs-Historie + externe Signale → Prognose → Bestellvorschlag.
+    </p>
+
+  </div>
+</section>
