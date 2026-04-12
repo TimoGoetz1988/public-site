@@ -7,7 +7,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  OWNER: timo-goetz-ai
+  OWNER: timogoetz1988
   IMAGE: public-site
 
 jobs:
